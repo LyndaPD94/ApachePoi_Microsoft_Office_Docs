@@ -2,6 +2,9 @@ package com.example.apachepoi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.fonts.Font;
+import android.graphics.fonts.FontFamily;
+import android.graphics.fonts.FontStyle;
 import android.os.Bundle;
 import android.os.Environment;
 import android.system.ErrnoException;
@@ -10,10 +13,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFStyle;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class XWPFWbk extends AppCompatActivity {
     Button btnexpdocx;
@@ -36,7 +51,7 @@ public class XWPFWbk extends AppCompatActivity {
             }
         });
     }
-    private void exportdoc() throws ErrnoException {
+    private void exportdoc() throws IOException {
         String input="/sdcard/Documents/moon1.png";
         try {
             File exportDir = new File(Environment.getExternalStorageDirectory()+"/Documents");
@@ -44,30 +59,19 @@ public class XWPFWbk extends AppCompatActivity {
                 exportDir.mkdirs();
             }
             try {
-                File file = new File(exportDir, "datos.docx");
+                File file = new File(exportDir, "xwpf_example.docx");
                 file.createNewFile();
-
                 try {
-                    XWPFDocument document = new XWPFDocument();
-                    XWPFParagraph paragraph1=document.createParagraph();
-                    XWPFRun run1=paragraph1.createRun();
-                    run1.setText(wordp.getText().toString());
-                    run1.setFontSize(12);
-                    try{
-                        FileInputStream fileInputStream=new FileInputStream(Environment.getExternalStorageDirectory()+"/Documents/moon1.png");
-                        XWPFPicture xwpfPicture= run1.addPicture(fileInputStream,2,"moon1.png",1,1);
-                        System.out.println(xwpfPicture.getDescription());
-                        xwpfPicture.getPictureData();
-
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-
+                    XWPFDocument document=new XWPFDocument();
+                    XWPFParagraph paragraph=document.createParagraph();
+                    XWPFRun run=paragraph.createRun();
+                    run.setText(docxtv.getText().toString());
+                    run.setFontSize(12);
                     FileOutputStream fileOut = new FileOutputStream(file);
                     document.write(fileOut);
                     fileOut.close();
                     Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.getCause();
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 }

@@ -55,7 +55,7 @@ public class HssfWbk extends AppCompatActivity {
             if (!exportDir.exists()) {
                 exportDir.mkdirs();
             }
-            File file = new File(exportDir, "datos.xls");
+            File file = new File(exportDir, "hssf_example.xls");
             file.createNewFile();
             try {
                 if (file.exists()) {
@@ -64,40 +64,7 @@ public class HssfWbk extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "ATTENTION:The file already exists!", Toast.LENGTH_LONG).show();
                 }
-                HSSFWorkbook wb = new HSSFWorkbook();
-                Sheet sheet = wb.createSheet("Hssf Workbook");
-                Row row = sheet.createRow(0);
-                row.setHeightInPoints(12);
 
-                Row row8 = sheet.createRow(1);
-                Cell cell8 = row8.createCell(0);
-                cell8.setCellValue(0);
-                Cell cell10 = row8.createCell(1);
-                cell10.setCellValue(1);
-                createCell(wb, row8, 0, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
-
-                Cell cell0 = row.createCell(2);
-                cell0.setCellValue("value1");
-                Cell cell = row.createCell(3);
-                cell.setCellValue("value2");
-                Cell cell2 = row.createCell(4);
-                cell2.setCellValue("value3");
-                Cell cell3 = row.createCell(5);
-                cell3.setCellValue("value4");
-
-                CellStyle style = wb.createCellStyle();
-                style.setBottomBorderColor(IndexedColors.GREEN.getIndex());
-                style.setLeftBorderColor(IndexedColors.GREEN.getIndex());
-                style.setRightBorderColor(IndexedColors.BLUE.getIndex());
-                style.setTopBorderColor(IndexedColors.BLUE.getIndex());
-                cell0.setCellStyle(style);
-                cell.setCellStyle(style);
-                cell2.setCellStyle(style);
-                cell3.setCellStyle(style);
-
-                FileOutputStream fileOut = new FileOutputStream(file);
-                wb.write(fileOut);
-                fileOut.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -105,12 +72,5 @@ public class HssfWbk extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Exported",Toast.LENGTH_SHORT);
         }
     }
-    private void  createCell(Workbook wb, Row row, int column, HorizontalAlignment halign, VerticalAlignment valign) {
-
-                Cell cell9 = row.createCell(0);
-                cell9.setCellValue("value");
-                CellStyle cellStyle = wb.createCellStyle();
-                cell9.setCellStyle(cellStyle);
-            }
 
 }
