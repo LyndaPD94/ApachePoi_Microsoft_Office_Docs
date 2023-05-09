@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACTION_CREATE_DOCUMENT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORGAE" />
@@ -16,7 +17,16 @@
         android:theme="@style/Theme.ApachePoi"
         tools:targetApi="31">
         <activity
+            android:name=".XSSFWbk"
+            android:label="XSSF Workbook"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".HslfSlsh"
+            android:label="HSLF Workbook"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -24,6 +34,7 @@
         </activity>
         <activity
             android:name=".XWPFWbk"
+            android:label="XWPF Workbook"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -31,6 +42,7 @@
         </activity>
         <activity
             android:name=".HssfWbk"
+            android:label="HSSF Workbook"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
