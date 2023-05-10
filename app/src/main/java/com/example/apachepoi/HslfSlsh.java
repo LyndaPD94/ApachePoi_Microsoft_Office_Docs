@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.style.BulletSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
+import org.apache.poi.hslf.model.HeadersFooters;
 import org.apache.poi.hslf.usermodel.HSLFAutoShape;
 import org.apache.poi.hslf.usermodel.HSLFBackground;
 import org.apache.poi.hslf.usermodel.HSLFLine;
@@ -18,12 +20,18 @@ import org.apache.poi.hslf.usermodel.HSLFObjectData;
 import org.apache.poi.hslf.usermodel.HSLFShape;
 import org.apache.poi.hslf.usermodel.HSLFSheet;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideMaster;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
+import org.apache.poi.hslf.usermodel.HSLFSoundData;
 import org.apache.poi.hslf.usermodel.HSLFTable;
 import org.apache.poi.hslf.usermodel.HSLFTextBox;
 import org.apache.poi.hslf.usermodel.HSLFTextParagraph;
 import org.apache.poi.hslf.usermodel.HSLFTextRun;
 import org.apache.poi.hslf.usermodel.HSLFTitleMaster;
+import org.apache.poi.hssf.usermodel.EscherGraphics2d;
+import org.apache.poi.hssf.usermodel.HeaderFooter;
+import org.apache.poi.sl.usermodel.ShapeType;
+import org.apache.poi.sl.usermodel.TextBox;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -67,10 +75,10 @@ public class HslfSlsh extends AppCompatActivity {
                 file.createNewFile();
                 try {
                     HSLFSlideShow slideShow =new HSLFSlideShow();
-                    HSLFSlide slide =slideShow.createSlide();
-                    HSLFMasterSheet masterSheet= slide.getSlideLayout();
-                    HSLFSheet sheet=slide.getMasterSheet();
-
+                    HeadersFooters headerFooter=slideShow.getSlideHeadersFooters();
+                    headerFooter.setHeaderText("Header");
+                    headerFooter.setFootersText("Footer");
+                    slideShow.createSlide();
 
                     FileOutputStream fileOut = new FileOutputStream(file);
                     slideShow.write(fileOut);
