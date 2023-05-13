@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -58,6 +59,8 @@ public class HssfWbk extends AppCompatActivity {
             File file = new File(exportDir, "hssf_example.xls");
             file.createNewFile();
             try {
+                HSSFWorkbook workbook =new HSSFWorkbook();
+
                 if (file.exists()) {
                     System.out.println("file.xls " + exportDir.getAbsolutePath());
                     Toast.makeText(getApplicationContext(), "Writing data to excel file...", Toast.LENGTH_SHORT).show();

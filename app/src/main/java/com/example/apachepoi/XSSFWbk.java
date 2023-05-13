@@ -9,10 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,16 +48,7 @@ public class XSSFWbk extends AppCompatActivity {
                 File file = new File(exportDir, "xssf_example.xlsx");
                 file.createNewFile();
                 try {
-                    XSSFWorkbook wb=new XSSFWorkbook();
-                    XSSFSheet sheet=wb.createSheet("Sheet 1");
-                    XSSFRow row=sheet.createRow(0);
-                    XSSFCell cell=row.getCell(1);
 
-
-
-                    FileOutputStream fileOut = new FileOutputStream(file);
-                    wb.write(fileOut);
-                    fileOut.close();
                     Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.getCause();
