@@ -9,12 +9,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.poi.hslf.HSLFSlideShow;
 import org.apache.poi.hslf.model.HeadersFooters;
-import org.apache.poi.hslf.usermodel.HSLFSlide;
-import org.apache.poi.hslf.usermodel.HSLFSlideShow;
-import org.apache.poi.hslf.usermodel.HSLFTextBox;
-import org.apache.poi.hslf.usermodel.HSLFTextParagraph;
-import org.apache.poi.hslf.usermodel.HSLFTextRun;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,7 +52,7 @@ public class HslfSlsh extends AppCompatActivity {
                 File file = new File(exportDir, "hslf_example.ppt");
                 file.createNewFile();
                 try {
-                    HSLFSlideShow slideShow =new HSLFSlideShow();
+                    /*HSLFSlideShow slideShow =new HSLFSlideShow();
                     HSLFSlide slide=slideShow.createSlide();
                     HeadersFooters headersFooters=slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
@@ -65,7 +62,7 @@ public class HslfSlsh extends AppCompatActivity {
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
                     FileOutputStream fileOut = new FileOutputStream(file);
                     slideShow.write(fileOut);
-                    fileOut.close();
+                    fileOut.close();*/
                     Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.getCause();
@@ -80,7 +77,7 @@ public class HslfSlsh extends AppCompatActivity {
         }
     }
     private void hslfheadfoot2() throws IOException {
-        HSLFSlideShow slideShow = new HSLFSlideShow();
+       /* HSLFSlideShow slideShow = new HSLFSlideShow();
         HeadersFooters headerFooter=slideShow.getSlideHeadersFooters();
         headerFooter.setHeaderText("Header");
         headerFooter.setFootersText("Footer");
@@ -123,6 +120,6 @@ public class HslfSlsh extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
-            }
+            }*/
         }
     }
