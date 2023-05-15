@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFChart;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -74,14 +76,48 @@ public class HssfWbk extends AppCompatActivity {
                 cell1.setCellValue("Description");
                 HSSFCell cell2=row1.createCell(1);
                 cell2.setCellValue("Amount");
+
                 HSSFRow row2=sheet.createRow(1);
                 HSSFCell cell3=row2.createCell(0);
-                cell3.setCellValue(5);
+                cell3.setCellValue("Item 1");
                 HSSFCell cell4= row2.createCell(1);
                 cell4.setCellValue(5);
-                HSSFCell cell5=row2.createCell(2);
-                cell5.setCellFormula("SUM(A2+B2)");
+
+
+                HSSFRow row3=sheet.createRow(2);
+                HSSFCell cell6=row3.createCell(0);
+                cell6.setCellValue("Item 2");
+                HSSFCell hssfCell=row3.createCell(1);
+                hssfCell.setCellValue(5);
+
+                HSSFRow row4=sheet.createRow(3);
+                HSSFCell cell7=row4.createCell(0);
+                cell7.setCellValue("Item 3");
+                HSSFCell hssfCell1= row4.createCell(1);
+                hssfCell1.setCellValue(5);
+
+                HSSFRow row5=sheet.createRow(4);
+                HSSFCell cell8=row5.createCell(0);
+                cell8.setCellValue("Item 4");
+                HSSFCell hssfCell2= row5.createCell(1);
+                hssfCell2.setCellValue(5);
+
+
+                HSSFRow row6=sheet.createRow(5);
+                HSSFCell cell5=row6.createCell(0);
+                cell5.setCellValue("TOTAL");
+                HSSFCell cell9=row6.createCell(1);
+                cell9.setCellFormula("SUM(B2:B5)");
+
+                /*HSSFCellStyle style=workbook.createCellStyle();
+                style.setRightBorderColor(IndexedColors.RED.getIndex());
+                style.setLeftBorderColor(IndexedColors.RED.getIndex());
+                style.setBorderBottom(IndexedColors.RED.getIndex());
+                style.setBorderTop(IndexedColors.RED.getIndex());
+                cell1.setCellValue(style.getIndex());
+                cell2.setCellValue(style.getIndex());*/
                 HSSFSheet sheet1=workbook.createSheet("sheet 2");
+
 
                 FileOutputStream fileOutputStream=new FileOutputStream(file);
                 workbook.write(fileOutputStream);

@@ -9,8 +9,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.poi.hslf.model.HeadersFooters;
+import org.apache.poi.hslf.model.TextBox;
+import org.apache.poi.hwpf.model.FormattedDiskPage;
+import org.apache.poi.hwpf.usermodel.HeaderStories;
 import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.Borders;
+import org.apache.poi.xwpf.usermodel.IBody;
+import org.apache.poi.xwpf.usermodel.IBodyElement;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
+import org.apache.poi.xwpf.usermodel.XWPFComment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFFooter;
+import org.apache.poi.xwpf.usermodel.XWPFFootnote;
+import org.apache.poi.xwpf.usermodel.XWPFFootnotes;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+import org.apache.poi.xwpf.usermodel.XWPFHeaderFooter;
+import org.apache.poi.xwpf.usermodel.XWPFNum;
+import org.apache.poi.xwpf.usermodel.XWPFNumbering;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFStyle;
@@ -18,11 +36,23 @@ import org.apache.poi.xwpf.usermodel.XWPFStyles;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.apache.xmlbeans.XmlObject;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFootnotes;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFtnEdn;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHdrFtr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNum;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHdrFtr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.impl.CTStyleImpl;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class XWPFWbk extends AppCompatActivity {
     Button btnexpdocx;
@@ -60,7 +90,7 @@ public class XWPFWbk extends AppCompatActivity {
                     XWPFDocument xwpfDocument=new XWPFDocument();
                     XWPFParagraph xwpfParagraph=xwpfDocument.createParagraph();
                     XWPFRun xwpfRun=xwpfParagraph.createRun();
-                    xwpfRun.setText(docxtv.getText().toString());
+                    xwpfRun.setText("El jugo de limón se usa en la medicina tradicional como diaforético y diurético, como gárgaras, loción y tónico. La sal es indispensable para el cuerpo, al igual que el agua y el oxígeno. Tu cuerpo necesita sal para funcionar normalmente, sin embargo, el exceso de sal puede causar estrés en el corazón. Es mejor usar sal del Himalaya en lugar de sal de mesa normal. La pimienta negra también se ha utilizado como medicina tradicional durante mucho tiempo. Por lo tanto, no es sorprendente que esta combinación pueda ayudar a combatir las siguientes dolencias.");
                     xwpfRun.setFontFamily("Arial");
                     xwpfRun.addBreak();
                     XWPFTable table=xwpfDocument.createTable();
@@ -70,10 +100,11 @@ public class XWPFWbk extends AppCompatActivity {
                     row.getCell(0).setText("Description");
                     row.getCell(1).setText("Amount");
                     XWPFTableRow row2=table.createRow();
-                   XWPFTableCell cell1=row2.createCell();
-                   row2.getCell(0).setText("6");
-                   row2.getCell(1).setText("5");
-                   xwpfRun.addBreak();
+                    XWPFTableCell cell1=row2.createCell();
+                    row2.getCell(0).setText("6");
+                    row2.getCell(1).setText("5");
+                    xwpfRun.addBreak();
+
 
                    XWPFParagraph paragraph= xwpfRun.getDocument().createParagraph();
                    XWPFRun run2=paragraph.createRun();
@@ -81,8 +112,22 @@ public class XWPFWbk extends AppCompatActivity {
                    run2.setFontFamily("Times New Roman");
                    run2.setText("Se tomaron las estimaciones de las infraestructuras con la asunción que la tierra está cubierta con arbusto al nivel mediano y tiene arboles frutales y especies que han sido sembrado por los dueños de la tierra hace años y tiene la edad de producción máxima. La superficie es semi plano y hay un río menos de 50 metros de la tierra. Según su ubicación geográfica en el país, se asumo que el suelo es arcilloso-francoso con un porcentaje alto de materia orgánica");
                    paragraph.setPageBreak(true);
-                   
-
+                   XWPFRun run3=paragraph.createRun();
+                   run3.setText("El jugo de limón se usa en la medicina tradicional como diaforético y diurético, como gárgaras, loción y tónico. La sal es indispensable para el cuerpo, al igual que el agua y el oxígeno. Tu cuerpo necesita sal para funcionar normalmente, sin embargo, el exceso de sal puede causar estrés en el corazón. Es mejor usar sal del Himalaya en lugar de sal de mesa normal. La pimienta negra también se ha utilizado como medicina tradicional durante mucho tiempo. Por lo tanto, no es sorprendente que esta combinación pueda ayudar a combatir las siguientes dolencias.");
+                   run3.setFontSize(17);
+                   run3.setFontFamily("Book Antiqua");
+                   run3.isBold();
+                   paragraph.setIndentationFirstLine(1);
+                   paragraph.setAlignment(ParagraphAlignment.CENTER);
+                   paragraph.setSpacingAfterLines(1);
+                   paragraph.setBorderBottom(Borders.DOTTED);
+                   paragraph.setBorderTop(Borders.DOTTED);
+                   paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
+                   paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
+                   XWPFHeaderFooter headerFooter=xwpfDocument.getHeaderFooterPolicy().createFooter(STHdrFtr.Enum.forString("Foot"));
+                   headerFooter.setHeaderFooter(headerFooter._getHdrFtr());
+                   //XWPFNumbering numbering=xwpfDocument.createNumbering();
+                   //numbering.addNum(new XWPFNum());
 
                     FileOutputStream fileOut=new FileOutputStream(file);
                     xwpfDocument.write(fileOut);
