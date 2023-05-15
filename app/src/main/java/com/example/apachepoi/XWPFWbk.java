@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.apache.poi.hslf.model.HeadersFooters;
-import org.apache.poi.hslf.model.TextBox;
+
 import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
 import org.apache.poi.ss.usermodel.Color;
@@ -128,6 +128,7 @@ public class XWPFWbk extends AppCompatActivity {
                    headerFooter.setHeaderFooter(headerFooter._getHdrFtr());
                    //XWPFNumbering numbering=xwpfDocument.createNumbering();
                    //numbering.addNum(new XWPFNum());
+
 
                     FileOutputStream fileOut=new FileOutputStream(file);
                     xwpfDocument.write(fileOut);
