@@ -14,7 +14,9 @@ import android.widget.Toast;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFChart;
+import org.apache.poi.hssf.usermodel.HSSFChildAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFShape;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -26,6 +28,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -109,14 +112,17 @@ public class HssfWbk extends AppCompatActivity {
                 HSSFCell cell9=row6.createCell(1);
                 cell9.setCellFormula("SUM(B2:B5)");
 
-                /*HSSFCellStyle style=workbook.createCellStyle();
+                HSSFCellStyle style=workbook.createCellStyle();
                 style.setRightBorderColor(IndexedColors.RED.getIndex());
                 style.setLeftBorderColor(IndexedColors.RED.getIndex());
                 style.setBorderBottom(IndexedColors.RED.getIndex());
                 style.setBorderTop(IndexedColors.RED.getIndex());
                 cell1.setCellValue(style.getIndex());
-                cell2.setCellValue(style.getIndex());*/
+                cell2.setCellValue(style.getIndex());
+
                 HSSFSheet sheet1=workbook.createSheet("sheet 2");
+
+
 
 
                 FileOutputStream fileOutputStream=new FileOutputStream(file);

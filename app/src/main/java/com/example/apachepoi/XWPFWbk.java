@@ -14,6 +14,12 @@ import org.apache.poi.hslf.model.HeadersFooters;
 import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
 import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.xddf.usermodel.chart.AxisPosition;
+import org.apache.poi.xddf.usermodel.chart.ChartTypes;
+import org.apache.poi.xddf.usermodel.chart.XDDFChart;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.IBody;
@@ -37,6 +43,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlObject;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFootnotes;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFtnEdn;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHdrFtr;
@@ -124,10 +131,20 @@ public class XWPFWbk extends AppCompatActivity {
                    paragraph.setBorderTop(Borders.DOTTED);
                    paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
                    paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
-                   XWPFHeaderFooter headerFooter=xwpfDocument.getHeaderFooterPolicy().createFooter(STHdrFtr.Enum.forString("Foot"));
-                   headerFooter.setHeaderFooter(headerFooter._getHdrFtr());
+                    XDDFChart chart=run3.getDocument().createChart();
+                    XDDFChartAxis xaxis= chart.createDateAxis(AxisPosition.BOTTOM);
+                    chart.createData(ChartTypes.BAR,xaxis,new XDDFValueAxis(CTValAx.Factory.newInstance()));
+                    XDDFChartAxis yaxis=chart.createDateAxis(AxisPosition.LEFT);
+                    XDDFChartData chartData=null;
+
+
+
+                   //XWPFHeaderFooter headerFooter=xwpfDocument.getHeaderFooterPolicy().createFooter(STHdrFtr.Enum.forString("Foot"));
+                   //headerFooter.setHeaderFooter(headerFooter._getHdrFtr());
                    //XWPFNumbering numbering=xwpfDocument.createNumbering();
                    //numbering.addNum(new XWPFNum());
+                    
+
 
 
                     FileOutputStream fileOut=new FileOutputStream(file);
