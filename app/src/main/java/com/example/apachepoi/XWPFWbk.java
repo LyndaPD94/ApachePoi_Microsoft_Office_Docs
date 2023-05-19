@@ -131,20 +131,12 @@ public class XWPFWbk extends AppCompatActivity {
                    paragraph.setBorderTop(Borders.DOTTED);
                    paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
                    paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
-                    XDDFChart chart=run3.getDocument().createChart();
+
+                   XDDFChart chart=run3.getDocument().createChart();
                     XDDFChartAxis xaxis= chart.createDateAxis(AxisPosition.BOTTOM);
                     chart.createData(ChartTypes.BAR,xaxis,new XDDFValueAxis(CTValAx.Factory.newInstance()));
                     XDDFChartAxis yaxis=chart.createDateAxis(AxisPosition.LEFT);
                     XDDFChartData chartData=null;
-
-
-
-                   //XWPFHeaderFooter headerFooter=xwpfDocument.getHeaderFooterPolicy().createFooter(STHdrFtr.Enum.forString("Foot"));
-                   //headerFooter.setHeaderFooter(headerFooter._getHdrFtr());
-                   //XWPFNumbering numbering=xwpfDocument.createNumbering();
-                   //numbering.addNum(new XWPFNum());
-                    
-
 
 
                     FileOutputStream fileOut=new FileOutputStream(file);

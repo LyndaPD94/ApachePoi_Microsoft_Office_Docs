@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFShape;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Color;
@@ -115,14 +116,12 @@ public class HssfWbk extends AppCompatActivity {
                 HSSFCellStyle style=workbook.createCellStyle();
                 style.setRightBorderColor(IndexedColors.RED.getIndex());
                 style.setLeftBorderColor(IndexedColors.RED.getIndex());
-                style.setBorderBottom(IndexedColors.RED.getIndex());
-                style.setBorderTop(IndexedColors.RED.getIndex());
+                style.setBorderBottom(BorderStyle.DASH_DOT);
+                style.setBorderTop(BorderStyle.DASH_DOT);
                 cell1.setCellValue(style.getIndex());
                 cell2.setCellValue(style.getIndex());
 
                 HSSFSheet sheet1=workbook.createSheet("sheet 2");
-
-
 
 
                 FileOutputStream fileOutputStream=new FileOutputStream(file);

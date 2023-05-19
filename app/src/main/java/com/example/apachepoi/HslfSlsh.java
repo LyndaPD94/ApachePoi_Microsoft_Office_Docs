@@ -11,6 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import org.apache.poi.hslf.model.HeadersFooters;
+import org.apache.poi.hslf.record.Slide;
+import org.apache.poi.hslf.usermodel.HSLFAutoShape;
+import org.apache.poi.hslf.usermodel.HSLFShape;
+import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideShow;
+import org.apache.poi.hslf.usermodel.HSLFTextBox;
+import org.apache.poi.hssf.usermodel.EscherGraphics2d;
+import org.apache.poi.sl.usermodel.SlideShow;
 
 
 import java.io.File;
@@ -52,7 +60,7 @@ public class HslfSlsh extends AppCompatActivity {
                 File file = new File(exportDir, "hslf_example.ppt");
                 file.createNewFile();
                 try {
-                    /*HSLFSlideShow slideShow =new HSLFSlideShow();
+                    HSLFSlideShow slideShow =new HSLFSlideShow();
                     HSLFSlide slide=slideShow.createSlide();
                     HeadersFooters headersFooters=slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
@@ -61,8 +69,14 @@ public class HslfSlsh extends AppCompatActivity {
                     headersFooters.setHeaderVisible(true);
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
                     FileOutputStream fileOut = new FileOutputStream(file);
+
+                    //Slide slide3=slide.getSlideRecord();
+
+                    HSLFTextBox textBox=slide1.createTextBox();
+                    textBox.setText("textbox").setFontSize(12.5);
+
                     slideShow.write(fileOut);
-                    fileOut.close();*/
+                    fileOut.close();
                     Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.getCause();
