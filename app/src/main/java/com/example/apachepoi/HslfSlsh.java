@@ -11,14 +11,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import org.apache.poi.hslf.model.HeadersFooters;
-import org.apache.poi.hslf.record.Slide;
 import org.apache.poi.hslf.usermodel.HSLFAutoShape;
+import org.apache.poi.hslf.usermodel.HSLFObjectShape;
 import org.apache.poi.hslf.usermodel.HSLFShape;
+import org.apache.poi.hslf.usermodel.HSLFShapeContainer;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideMaster;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
-import org.apache.poi.hslf.usermodel.HSLFTextBox;
-import org.apache.poi.hssf.usermodel.EscherGraphics2d;
-import org.apache.poi.sl.usermodel.SlideShow;
+import org.apache.poi.hslf.usermodel.HSLFTextParagraph;
+import org.apache.poi.hslf.usermodel.HSLFTextRun;
+import org.apache.poi.hslf.usermodel.HSLFTextShape;
+import org.apache.poi.hslf.usermodel.HSLFTitleMaster;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.sl.usermodel.Slide;
+import org.apache.poi.sl.usermodel.TextBox;
+import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.xslf.usermodel.XSLFSlideShow;
+import org.apache.poi.xslf.usermodel.XSLFTextBox;
+import org.openxmlformats.schemas.presentationml.x2006.main.CTSlide;
+import org.openxmlformats.schemas.presentationml.x2006.main.CTSlideIdListEntry;
+import org.openxmlformats.schemas.presentationml.x2006.main.CTSlideMaster;
 
 
 import java.io.File;
@@ -49,10 +61,10 @@ public class HslfSlsh extends AppCompatActivity {
             }
         });
     }
-    private void hslfheadfoot() throws IOException {
+    private void hslfheadfoot() throws IOException, InvalidFormatException,NoClassDefFoundError,ClassNotFoundException {
 
         try {
-            File exportDir = new File(Environment.getExternalStorageDirectory()+"/Download");
+            File exportDir = new File(Environment.getExternalStorageDirectory()+"/Documents");
             if (!exportDir.exists()) {
                 exportDir.mkdirs();
             }
@@ -65,16 +77,20 @@ public class HslfSlsh extends AppCompatActivity {
                     HeadersFooters headersFooters=slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
                     headersFooters.setHeaderText("Head");
-                    headersFooters.setFooterVisible(true);
                     headersFooters.setHeaderVisible(true);
+                    headersFooters.setFooterVisible(true);
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
+                    HSLFTextShape textShape=slide1.getPlaceholderByTextType(1);
+                    /* HSLFTextParagraph textParagraph=autoShape.getTextParagraphs().get(2);
+                    HSLFTextRun textRun=textParagraph.getTextRuns().get(2);*/
+
+
+
+
+
+
+
                     FileOutputStream fileOut = new FileOutputStream(file);
-
-                    //Slide slide3=slide.getSlideRecord();
-
-                    HSLFTextBox textBox=slide1.createTextBox();
-                    textBox.setText("textbox").setFontSize(12.5);
-
                     slideShow.write(fileOut);
                     fileOut.close();
                     Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
