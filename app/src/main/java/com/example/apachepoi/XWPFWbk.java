@@ -23,6 +23,7 @@ import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.Borders;
+import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.IBody;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -125,7 +126,7 @@ public class XWPFWbk extends AppCompatActivity {
                     run3.setText("El jugo de limón se usa en la medicina tradicional como diaforético y diurético, como gárgaras, loción y tónico. La sal es indispensable para el cuerpo, al igual que el agua y el oxígeno. Tu cuerpo necesita sal para funcionar normalmente, sin embargo, el exceso de sal puede causar estrés en el corazón. Es mejor usar sal del Himalaya en lugar de sal de mesa normal. La pimienta negra también se ha utilizado como medicina tradicional durante mucho tiempo. Por lo tanto, no es sorprendente que esta combinación pueda ayudar a combatir las siguientes dolencias.");
                     run3.setFontSize(17);
                     run3.setFontFamily("Book Antiqua");
-                    run3.isBold();
+
                     paragraph.setIndentationFirstLine(1);
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
                     paragraph.setSpacingAfterLines(1);
@@ -133,12 +134,17 @@ public class XWPFWbk extends AppCompatActivity {
                     paragraph.setBorderTop(Borders.DOTTED);
                     paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
                     paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
+                    run3.addBreak(BreakType.PAGE);
 
                     XDDFChart chart = run3.getDocument().createChart();
-                    XDDFChartAxis xaxis = chart.createDateAxis(AxisPosition.BOTTOM);
-                    chart.createData(ChartTypes.BAR, xaxis, new XDDFValueAxis(CTValAx.Factory.newInstance()));
-                    XDDFChartAxis yaxis = chart.createDateAxis(AxisPosition.LEFT);
-                    XDDFChartData chartData = null;
+                    /*XDDFValueAxis yvalue=chart.createValueAxis(AxisPosition.LEFT);
+                    XDDFChartAxis xaxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    XDDFChartData chartData=chart.createData(ChartTypes.BAR,xaxis,yvalue);
+
+                    yvalue.setTitle("Title Y Axis");
+                    XDDFValueAxis xvalueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
+                    xvalueAxis.setTitle("Title X Axis");*/
+
 
 
                     FileOutputStream fileOut = new FileOutputStream(file);
