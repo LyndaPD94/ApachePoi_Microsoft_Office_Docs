@@ -137,13 +137,9 @@ public class XWPFWbk extends AppCompatActivity {
                     run3.addBreak(BreakType.PAGE);
 
                     XDDFChart chart = run3.getDocument().createChart();
-                    /*XDDFValueAxis yvalue=chart.createValueAxis(AxisPosition.LEFT);
-                    XDDFChartAxis xaxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
-                    XDDFChartData chartData=chart.createData(ChartTypes.BAR,xaxis,yvalue);
-
-                    yvalue.setTitle("Title Y Axis");
-                    XDDFValueAxis xvalueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
-                    xvalueAxis.setTitle("Title X Axis");*/
+                    XDDFChartAxis axis= chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    XDDFValueAxis valueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
+                    XDDFChartData chartData=chart.createData(ChartTypes.BAR,axis,valueAxis);
 
 
 
