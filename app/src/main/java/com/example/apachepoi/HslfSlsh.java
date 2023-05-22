@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import org.apache.poi.common.usermodel.fonts.FontGroup;
 import org.apache.poi.hslf.model.HeadersFooters;
 import org.apache.poi.hslf.record.MasterTextPropAtom;
 import org.apache.poi.hslf.usermodel.HSLFAutoShape;
@@ -36,6 +37,8 @@ import org.apache.poi.sl.usermodel.ShapeContainer;
 import org.apache.poi.sl.usermodel.SimpleShape;
 import org.apache.poi.sl.usermodel.Slide;
 import org.apache.poi.sl.usermodel.TextBox;
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xslf.usermodel.XSLFShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFSlideShow;
@@ -57,9 +60,7 @@ import java.util.List;
 public class HslfSlsh extends AppCompatActivity {
     Button exprtpptx;
     EditText pptxtv;
-    public  static  final String[][]tbl1={
-            {"1","2"},{"4","5"}
-    };
+
     List<HSLFTextParagraph> paragraphList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +98,7 @@ public class HslfSlsh extends AppCompatActivity {
                     HSLFSlide slide=slideShow.createSlide();
                     HeadersFooters headersFooters=slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
-                    headersFooters.setHeaderText("Head");
-                    headersFooters.setHeaderVisible(true);
+
                     headersFooters.setFooterVisible(true);
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
                     HSLFBackground background=slide1.getBackground().getSheet().getBackground();
@@ -110,7 +110,6 @@ public class HslfSlsh extends AppCompatActivity {
                     HSLFTextRun run=new HSLFTextRun(hslfTextRuns);
                     HSLFTextParagraph textParagraph= run.getTextParagraph();
                     textParagraph.getDefaultTabSize();
-
 
 
 
@@ -177,52 +176,5 @@ public class HslfSlsh extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
             }*/
         }
-        public void slideTable() throws Exception {
-            try {
-                File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
-                if (!exportDir.exists()) {
-                    exportDir.mkdirs();
-                }
-                try {
-                    File file = new File(exportDir, "hslf_table.ppt");
-                    file.createNewFile();
-                    try {
-                        HSLFSlideShow slideShow = new HSLFSlideShow();
-                        HSLFSlide slide1 = slideShow.createSlide();
-                        createTable(slide1);
 
-
-                        FileOutputStream FileOut=new FileOutputStream(file);
-                        slideShow.write(FileOut);
-                        FileOut.close();
-                        Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        public void createTable(HSLFSlide slide1){
-        try{
-            HSLFTable table= slide1.createTable(2,2);
-            for(int i=0;i<tbl1.length;i++){
-                for(int j=0;j<tbl1[j].length;j++){
-                    HSLFTableCell cell= table.getCell(i,j);
-                    HSLFTextRun textRun=cell.getTextParagraphs().get(0).getTextRuns().get(0);
-                    textRun.setFontSize(10d);
-                    textRun.setFontFamily("Times New Roman");
-                    cell.setText(tbl1[i][j]);
-                }
-
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        }
     }
