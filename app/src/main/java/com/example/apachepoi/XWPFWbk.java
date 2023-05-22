@@ -162,15 +162,34 @@ public class XWPFWbk extends AppCompatActivity {
 
     private void exportdoc2() throws IOException, InvalidFormatException {
         try {
-            XWPFDocument xwpfDocument = new XWPFDocument();
-            XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
-            XWPFRun xwpfRun = xwpfParagraph.createRun();
-            xwpfRun.setColor("RRGGBB");
-            xwpfRun.setFontSize(11.5);
-            //xwpfRun.setFontFamily("Arial");
-            //xwpfRun.addBreak();
-            xwpfDocument.getXWPFDocument().createChart(5, 5);
-        } catch (Exception e) {
+            try {
+                File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
+                if (!exportDir.exists()) {
+                    exportDir.mkdirs();
+                }
+                try {
+                    File file = new File(exportDir, "xwpf_example.docx");
+                    file.createNewFile();
+                    try {
+                        XWPFDocument xwpfDocument = new XWPFDocument();
+                        XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
+                        XWPFRun run3 = xwpfParagraph.createRun();
+                        XDDFChart chart = run3.getDocument().createChart();
+                        XDDFChartAxis axis= chart.createCategoryAxis(AxisPosition.BOTTOM);
+                        XDDFValueAxis valueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
+                        XDDFChartData chartData=chart.createData(ChartTypes.BAR,axis,valueAxis);
+                    } catch (Exception e) {
+                        e.getCause();
+                        Toast.makeText(getApplicationContext(), "No chart", Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
