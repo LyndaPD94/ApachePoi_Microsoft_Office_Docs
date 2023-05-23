@@ -20,6 +20,8 @@ import org.apache.poi.xddf.usermodel.chart.ChartTypes;
 import org.apache.poi.xddf.usermodel.chart.XDDFChart;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFDataSource;
+import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.Borders;
@@ -66,7 +68,9 @@ import java.util.List;
 public class XWPFWbk extends AppCompatActivity {
     Button btnexpdocx;
     EditText docxtv;
-    private Color RRGGBB;
+    public XDDFDataSource<String>xddfDataSource;
+    public XDDFNumericalDataSource<Number>xddfNumericalDataSource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
