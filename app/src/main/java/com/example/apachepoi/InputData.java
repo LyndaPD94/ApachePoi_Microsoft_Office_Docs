@@ -18,9 +18,13 @@ public class InputData extends XDDFValueAxis {
       setTwo(two);
     }
 
+    public InputData() {
+        super(CTPlotArea.Factory.newInstance(), AxisPosition.BOTTOM);
+    }
+
 
     public Float getTen() {
-        ten=Float.parseFloat(String.valueOf(10));
+
         return ten;
     }
 
@@ -29,7 +33,7 @@ public class InputData extends XDDFValueAxis {
     }
 
     public Float getTwo() {
-        two=Float.parseFloat(String.valueOf(2));
+
         return two;
     }
 
@@ -38,7 +42,7 @@ public class InputData extends XDDFValueAxis {
     }
 
     public Float getThree() {
-        three=Float.parseFloat(String.valueOf(3));
+
         return three;
     }
 
@@ -47,7 +51,7 @@ public class InputData extends XDDFValueAxis {
     }
 
     public Float getEleven() {
-        eleven=Float.parseFloat(String.valueOf(11));
+
         return eleven;
     }
 
