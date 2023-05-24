@@ -1,5 +1,9 @@
 package com.example.apachepoi;
 
+import org.apache.poi.xddf.usermodel.chart.AxisPosition;
+import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
+
 public class InputData extends XDDFValueAxis {
     private  Float ten;
     private  Float two;
@@ -7,14 +11,13 @@ public class InputData extends XDDFValueAxis {
     private  Float eleven;
 
     public InputData(Float ten, Float two,Float three,Float eleven){
-      setTen(ten);
+        super(CTPlotArea.Factory.newInstance(), AxisPosition.BOTTOM);
+        setTen(ten);
       setThree(three);
       setEleven(eleven);
       setTwo(two);
     }
-    public  InputData(){
 
-    }
 
     public Float getTen() {
         ten=Float.parseFloat(String.valueOf(10));
