@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import org.apache.poi.common.usermodel.fonts.FontGroup;
+import org.apache.poi.ddf.EscherRecordTypes;
+import org.apache.poi.hslf.exceptions.HSLFException;
 import org.apache.poi.hslf.model.HeadersFooters;
+import org.apache.poi.hslf.record.ColorSchemeAtom;
 import org.apache.poi.hslf.record.MasterTextPropAtom;
 import org.apache.poi.hslf.usermodel.HSLFAutoShape;
 import org.apache.poi.hslf.usermodel.HSLFBackground;
@@ -34,6 +37,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.sl.usermodel.MasterSheet;
 import org.apache.poi.sl.usermodel.Placeholder;
 import org.apache.poi.sl.usermodel.ShapeContainer;
+import org.apache.poi.sl.usermodel.ShapeType;
 import org.apache.poi.sl.usermodel.SimpleShape;
 import org.apache.poi.sl.usermodel.Slide;
 import org.apache.poi.sl.usermodel.TextBox;
@@ -53,6 +57,7 @@ import org.openxmlformats.schemas.presentationml.x2006.main.STSlideMasterId;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,20 +65,22 @@ import java.util.List;
 public class HslfSlsh extends AppCompatActivity {
     Button exprtpptx;
     EditText pptxtv;
+    NoClassDefFoundError noClassDefFoundError;
 
-    List<HSLFTextParagraph> paragraphList=new ArrayList<>();
+    List<HSLFTextParagraph> paragraphList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hslf_slsh);
-        exprtpptx=(Button)findViewById(R.id.btnexprtpptx);
-        pptxtv=(EditText)findViewById(R.id.hslftv);
+        exprtpptx = (Button) findViewById(R.id.btnexprtpptx);
+        pptxtv = (EditText) findViewById(R.id.hslftv);
 
         exprtpptx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                   // hslfBullet();
+                    // hslfBullet();
                     hslfejmp();
                     // slideTable();
                 } catch (Exception e) {
@@ -83,10 +90,11 @@ public class HslfSlsh extends AppCompatActivity {
             }
         });
     }
-    private void hslfejmp() throws IOException, InvalidFormatException,NoClassDefFoundError,ClassNotFoundException {
+
+    private void hslfejmp() throws IOException, InvalidFormatException, NoClassDefFoundError, ClassNotFoundException {
 
         try {
-            File exportDir = new File(Environment.getExternalStorageDirectory()+"/Documents");
+            File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
             if (!exportDir.exists()) {
                 exportDir.mkdirs();
             }
@@ -94,12 +102,14 @@ public class HslfSlsh extends AppCompatActivity {
                 File file = new File(exportDir, "hslf_example.ppt");
                 file.createNewFile();
                 try {
-                    HSLFSlideShow slideShow =new HSLFSlideShow();
-                    HSLFSlide slide=slideShow.createSlide();
-                    HeadersFooters headersFooters=slideShow.getSlideHeadersFooters();
+                    HSLFSlideShow slideShow = new HSLFSlideShow();
+                    HSLFSlide slide = slideShow.createSlide();
+                    HeadersFooters headersFooters = slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
-
                     headersFooters.setFooterVisible(true);
+
+                    //addTextbox(slide);
+
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
                     HSLFBackground background=slide1.getBackground().getSheet().getBackground();
                     HSLFSheet sheet=slide1.getMasterSheet();
@@ -109,8 +119,6 @@ public class HslfSlsh extends AppCompatActivity {
                     HSLFTextParagraph hslfTextRuns = null;
                     HSLFTextRun run=new HSLFTextRun(hslfTextRuns);
                     HSLFTextParagraph textParagraph= run.getTextParagraph();
-                    textParagraph.getDefaultTabSize();
-
 
 
 
@@ -122,7 +130,7 @@ public class HslfSlsh extends AppCompatActivity {
                     e.getCause();
                     Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
                 }
-            }catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
             }
@@ -130,6 +138,7 @@ public class HslfSlsh extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
         }
     }
+
     private void hslfheadfoot() throws IOException {
        /* HSLFSlideShow slideShow = new HSLFSlideShow();
         HeadersFooters headerFooter=slideShow.getSlideHeadersFooters();
@@ -175,6 +184,32 @@ public class HslfSlsh extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
             }*/
+    }
+
+    private void addTextbox(HSLFSlide slide) throws IOException,NoClassDefFoundError,InvalidFormatException, NoClassDefFoundError, ClassNotFoundException{
+        try {
+            HSLFTextBox txtbx = new HSLFTextBox();
+            HSLFTextParagraph txtbxp = txtbx.getTextParagraphs().get(0);
+            txtbxp.getTextRuns().get(0).setFontSize(24.5);
+            txtbxp.getTextRuns().get(0).setFontFamily("Times New Roman");
+            txtbxp.setBullet(true);
+            txtbxp.setIndent(0.5);
+            txtbxp.setLeftMargin(20.0);
+            txtbxp.setRightMargin(20.0);
+            txtbxp.setBulletSize(5.0);
+            txtbxp.setBulletChar('\u263A');
+            txtbx.setHorizontalCentered(Boolean.TRUE);
+            txtbx.setText("one\r" + "two\r" + "three");
+            txtbx.setShapeType(ShapeType.ACCENT_CALLOUT_1);
+            slide.addShape(txtbx);
+
+            Toast.makeText(getApplicationContext(), "Textbox Created", Toast.LENGTH_LONG).show();
+        } catch (NoClassDefFoundError e) {
+            e.printStackTrace();
+            e.addSuppressed(e.getCause());
+            HSLFException exception=new HSLFException("Cannot create file");
+            Toast.makeText(getApplicationContext(), "No textbox", Toast.LENGTH_LONG).show();
         }
 
     }
+}

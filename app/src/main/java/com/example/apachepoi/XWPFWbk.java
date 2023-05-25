@@ -15,14 +15,21 @@ import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.xddf.usermodel.chart.AxisLabelAlignment;
 import org.apache.poi.xddf.usermodel.chart.AxisPosition;
 import org.apache.poi.xddf.usermodel.chart.ChartTypes;
+import org.apache.poi.xddf.usermodel.chart.XDDFBarChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFCategoryAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFChart;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartLegend;
 import org.apache.poi.xddf.usermodel.chart.XDDFDataSource;
+import org.apache.poi.xddf.usermodel.chart.XDDFLegendEntry;
 import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
+import org.apache.poi.xddf.usermodel.chart.XDDFSeriesAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
+import org.apache.poi.xddf.usermodel.text.XDDFTextBody;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.BreakType;
@@ -47,6 +54,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.apache.xmlbeans.XmlObject;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFootnotes;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFtnEdn;
@@ -63,6 +71,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XWPFWbk extends AppCompatActivity {
@@ -70,6 +79,8 @@ public class XWPFWbk extends AppCompatActivity {
     EditText docxtv;
     public XDDFDataSource<String>xddfDataSource;
     public XDDFNumericalDataSource<Number>xddfNumericalDataSource;
+    List<XDDFChartData>xddfChartData;
+    List<InputData>inputData;
 
 
     @Override
@@ -91,7 +102,7 @@ public class XWPFWbk extends AppCompatActivity {
     }
 
     private void exportdoc() throws IOException {
-        String input = "/sdcard/Documents/moon1.png";
+        String input1 = "/sdcard/Documents/moon1.png";
         try {
             File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
             if (!exportDir.exists()) {
@@ -141,9 +152,21 @@ public class XWPFWbk extends AppCompatActivity {
                     run3.addBreak(BreakType.PAGE);
 
                     XDDFChart chart = run3.getDocument().createChart();
-                    XDDFChartAxis axis= chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    XDDFCategoryAxis categoryAxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    categoryAxis.getOrAddMajorGridProperties().getLineProperties().addDashStop();
+                    categoryAxis.setTitle("Title");
+                    categoryAxis.getLabelAlignment().compareTo(AxisLabelAlignment.CENTER);
                     XDDFValueAxis valueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
-                    XDDFChartData chartData=chart.createData(ChartTypes.BAR,axis,valueAxis);
+                    //XDDFChartData xddfChartData=chart.createData(ChartTypes.BAR,categoryAxis,valueAxis);
+
+                    //xddfChartData.getValueAxes().set(0,valueAxis);
+                    //XDDFChartAxis axis= chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    //XDDFValueAxis valueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
+                    //XDDFChartData chartData=chart.createData(ChartTypes.BAR,axis,valueAxis);
+                    //XDDFChartLegend chartLegend=chart.getOrAddLegend();
+                    //XDDFLegendEntry legendEntry= chartLegend.addEntry();
+                    //XDDFTextBody textBody=legendEntry.getTextBody();
+                    //valueAxis.setTitle("Title");
 
 
 
@@ -196,5 +219,15 @@ public class XWPFWbk extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    private   List<XDDFValueAxis> getValueAxes(){
+        List<InputData>inputData=new ArrayList<>();
+        InputData input= new InputData();
+        input.setTwo(Float.parseFloat(String.valueOf(2)));
+        input.setEleven(Float.parseFloat(String.valueOf(11)));
+        input.setThree(Float.parseFloat(String.valueOf(3)));
+        input.setThree(Float.parseFloat(String.valueOf(3)));
+        inputData.add(input);
+        return getValueAxes();
     }
 }
