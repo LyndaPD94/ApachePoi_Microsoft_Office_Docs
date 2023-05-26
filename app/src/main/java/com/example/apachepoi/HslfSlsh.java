@@ -107,8 +107,8 @@ public class HslfSlsh extends AppCompatActivity {
                     HeadersFooters headersFooters = slideShow.getSlideHeadersFooters();
                     headersFooters.setFootersText("Foot");
                     headersFooters.setFooterVisible(true);
+                    addTextbox(slide);
 
-                    //addTextbox(slide);
 
                     HSLFSlide slide1=slide.getSlideShow().createSlide();
                     HSLFBackground background=slide1.getBackground().getSheet().getBackground();
@@ -205,10 +205,11 @@ public class HslfSlsh extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "Textbox Created", Toast.LENGTH_LONG).show();
         } catch (NoClassDefFoundError e) {
-            e.printStackTrace();
-            e.addSuppressed(e.getCause());
-            HSLFException exception=new HSLFException("Cannot create file");
             Toast.makeText(getApplicationContext(), "No textbox", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            HSLFException exception=new HSLFException("Cannot create file");
+            e.addSuppressed(exception);
+
         }
 
     }
