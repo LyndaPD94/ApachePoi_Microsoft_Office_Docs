@@ -1,5 +1,6 @@
 package com.example.apachepoi;
 
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -14,6 +15,7 @@ import org.apache.poi.hslf.model.HeadersFooters;
 import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -39,11 +41,13 @@ import org.apache.poi.xddf.usermodel.chart.XDDFSeriesAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xddf.usermodel.text.XDDFTextBody;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.IBody;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.TableWidthType;
 import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
 import org.apache.poi.xwpf.usermodel.XWPFComment;
@@ -76,23 +80,28 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHdrFtr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.impl.CTStyleImpl;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class XWPFWbk extends AppCompatActivity {
     Button btnexpdocx;
     EditText docxtv;
-    public XDDFDataSource<String>xddfDataSource;
-    public XDDFNumericalDataSource<Number>xddfNumericalDataSource;
-    List<XDDFChartData>xddfChartData;
-    List<InputData>inputData;
+    public XDDFDataSource<String> xddfDataSource;
+    public XDDFNumericalDataSource<Number> xddfNumericalDataSource;
+    List<XDDFChartData> xddfChartData;
+    List<InputData> inputData;
 
     private static final int COLUMN_LANGUAGES = 0;
     private static final int COLUMN_COUNTRIES = 1;
@@ -102,6 +111,7 @@ public class XWPFWbk extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_xwpfwbk);
         btnexpdocx = (Button) findViewById(R.id.exprtdocx);
         docxtv = (EditText) findViewById(R.id.doocxtv);
@@ -117,7 +127,7 @@ public class XWPFWbk extends AppCompatActivity {
         });
     }
 
-    private void exportdoc() throws IOException {
+    private void exportdoc() throws IOException, FileNotFoundException, NoSuchFileException {
 
         try {
             File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
@@ -129,21 +139,28 @@ public class XWPFWbk extends AppCompatActivity {
                 file.createNewFile();
                 try {
                     XWPFDocument xwpfDocument = new XWPFDocument();
-                   XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
+                    XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                     XWPFRun xwpfRun = xwpfParagraph.createRun();
-                    xwpfRun.setText("El jugo de limón se usa en la medicina tradicional como diaforético y diurético, como gárgaras, loción y tónico. La sal es indispensable para el cuerpo, al igual que el agua y el oxígeno. Tu cuerpo necesita sal para funcionar normalmente, sin embargo, el exceso de sal puede causar estrés en el corazón. Es mejor usar sal del Himalaya en lugar de sal de mesa normal. La pimienta negra también se ha utilizado como medicina tradicional durante mucho tiempo. Por lo tanto, no es sorprendente que esta combinación pueda ayudar a combatir las siguientes dolencias.");
+                    xwpfRun.setText("XWPF tiene una API central bastante estable, que proporciona acceso de lectura y escritura a las partes principales de un archivo de .docx Word, pero no está completo. Para algunas cosas, puede ser necesario sumergirse en el XMLBeans de bajo nivel objetos para manipular la estructura OOXML. Para la extracción de texto básica, utilice org.apache.poi.xwpf.extractor.XWPFWordExtractor. Acepta una entrada stream o un XWPFDocument. El método getText() se puede utilizar para Obtenga el texto de todos los párrafos, junto con tablas, encabezados, etc.");
                     xwpfRun.setFontFamily("Arial");
                     xwpfRun.addBreak();
-                    XWPFTable table = xwpfDocument.createTable();
-                    XWPFTableRow row = table.createRow();
 
-                    XWPFTableCell cell = row.createCell();
-                    row.getCell(0).setText("Description");
-                    row.getCell(1).setText("Amount");
+                    XWPFTable table = xwpfDocument.createTable();
+                    XWPFTableRow row = table.getRow(0);
+                    XWPFTableCell cell0 = row.getCell(0);
+                    cell0.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                    cell0.setText("Description");
+                    cell0.getTableRow().createCell();
+                    cell0.getTableRow().getCell(1).setText("Amount");
                     XWPFTableRow row2 = table.createRow();
-                    XWPFTableCell cell1 = row2.createCell();
-                    row2.getCell(0).setText("6");
-                    row2.getCell(1).setText("5");
+                    XWPFTableCell cell1 = row2.getCell(0);
+                    cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                    cell1.setText("item 1");
+                    cell1.getTableRow().getCell(1).setText("5");
+
+
+
+
                     xwpfRun.addBreak();
 
 
@@ -151,11 +168,14 @@ public class XWPFWbk extends AppCompatActivity {
                     XWPFRun run2 = paragraph.createRun();
                     run2.addBreak();
                     run2.setFontFamily("Times New Roman");
-                    run2.setText("Se tomaron las estimaciones de las infraestructuras con la asunción que la tierra está cubierta con arbusto al nivel mediano y tiene arboles frutales y especies que han sido sembrado por los dueños de la tierra hace años y tiene la edad de producción máxima. La superficie es semi plano y hay un río menos de 50 metros de la tierra. Según su ubicación geográfica en el país, se asumo que el suelo es arcilloso-francoso con un porcentaje alto de materia orgánica");
+                    run2.setText("Desde un XWPFParagraph, es posible obtener los elementos XWPFRun existentes que componen el texto. Para agregar nuevo texto, el método createRun() agregará un nuevo XWPFRun al final de la lista. insertNewRun(int) puede ser se utiliza para agregar un nuevo XWPFRun en un punto específico de la párrafo.Una vez que tenga un XWPFRun, puede usar el método setText(String) para realizar cambios en el texto. Para agregar elementos de espacio en blanco como tabulaciones y saltos de línea, es necesario utilizar métodos como addTab() y addCarriageReturn().El texto del documento también se encuentra en la corriente principal. Su inicio location se da como FIB.fcMin y su longitud viene dada en bytes por FIB.ccpText. Estos dos valores no son muy útiles para obtener el texto Debido a Unicode. Puede haber texto Unicode entremezclado con ASCII Mensaje de texto. Eso nos lleva a la mesa de piezas." +
+                            "\n" +
+                            "La tabla de piezas se utiliza para dividir el texto en no unicode y unicode pedazos. El tamaño y el desplazamiento se indican en FIB.fcClx y FIB.lcbClx respectivamente. La tabla de piezas puede contener modificadores de propiedad (prm). Estos son para archivos complejos (guardados rápidamente) y se omiten. Cada pieza de texto Contiene desplazamientos en la secuencia principal que contienen texto para esa pieza. Si la pieza utiliza unicode, el desplazamiento del archivo se enmascara con un bit determinado. Luego tienes que desenmascarar el bit y dividir por 2 para obtener el archivo real compensar.");
                     paragraph.setPageBreak(true);
                     XWPFRun run3 = paragraph.createRun();
-                    run3.setText("El jugo de limón se usa en la medicina tradicional como diaforético y diurético, como gárgaras, loción y tónico. La sal es indispensable para el cuerpo, al igual que el agua y el oxígeno. Tu cuerpo necesita sal para funcionar normalmente, sin embargo, el exceso de sal puede causar estrés en el corazón. Es mejor usar sal del Himalaya en lugar de sal de mesa normal. La pimienta negra también se ha utilizado como medicina tradicional durante mucho tiempo. Por lo tanto, no es sorprendente que esta combinación pueda ayudar a combatir las siguientes dolencias.");
-                    run3.setFontSize(17);
+                    run3.addBreak();
+                    run3.setText("Los estilos de párrafo sin comprimir se representan mediante el Pargraph Estructura de datos de propiedades (PAP). Los estilos de carácter sin comprimir son representado por la estructura de datos Propiedades de caracteres (CHP). Los estilos para el texto del documento se almacenan en formato comprimido en el directorio correspondientes Páginas de disco formateadas (FKP). Se refiere un PAP comprimido a como PAPX y un CHP comprimido es un CHPX. Las ubicaciones de FKP son Almacenado en la tabla de contenedores. Hay mesas de contenedores separadas para CHPX y PAPAX. Las ubicaciones y tamaños de las mesas de contenedores se almacenan en el FIB.");
+                    run3.setFontSize(12);
                     run3.setFontFamily("Book Antiqua");
 
                     paragraph.setIndentationFirstLine(1);
@@ -166,8 +186,8 @@ public class XWPFWbk extends AppCompatActivity {
                     paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
                     paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
                     run3.addBreak(BreakType.PAGE);
-                    XWPFRun run4=paragraph.createRun();
-                    XWPFParagraph paragraph1=run4.getDocument().createParagraph();
+                    XWPFRun run4 = paragraph.createRun();
+                    XWPFParagraph paragraph1 = run4.getDocument().createParagraph();
                     paragraph1.setIndentationFirstLine(1);
                     paragraph1.setAlignment(ParagraphAlignment.CENTER);
                     paragraph1.setSpacingAfterLines(1);
@@ -175,12 +195,148 @@ public class XWPFWbk extends AppCompatActivity {
                     paragraph1.setBorderTop(Borders.BASIC_BLACK_SQUARES);
                     paragraph1.setBorderLeft(Borders.BASIC_BLACK_SQUARES);
                     paragraph1.setBorderRight(Borders.BASIC_BLACK_SQUARES);
-                    run4.setText("Chart");
-                    run4.addBreak();
-                    insertChart(run4);
+                    XWPFParagraph paragraph2=run4.getDocument().createParagraph();
+                    paragraph2.createRun().setText("Bar Chart");
+                    //---------------------------------------------------------------------------------------------------
+                    String chartTitle = "10 languages with most speakers as first language";  // first line is chart title
+                    String seriesText = "Speakers,Language";
+                    String[] series = seriesText.split(",");
+
+                    // Category Axis Data"seriesText)
+                    List<String> listLanguages = new ArrayList<>(5);
+                    // Values
+                    List<Double> listCountries = new ArrayList<>(5);
+                    List<Double> listSpeakers = new ArrayList<>(5);
+
+                    // set model
+                    String ln = null;
+
+                    //String[] vals = ln.split(",");
+                    listCountries.add(58d);
+                    listCountries.add(4d);
+                    listCountries.add(28d);
+                    listCountries.add(118d);
+                    listCountries.add(4d);
+
+
+                    listSpeakers.add(315d);
+                    listSpeakers.add(243d);
+                    listSpeakers.add(129d);
+                    listSpeakers.add(378d);
+                    listSpeakers.add(260d);
+
+
+                    listLanguages.add("english");
+                    listLanguages.add("spanish");
+                    listLanguages.add("french");
+                    listLanguages.add("chinese");
+                    listLanguages.add("latin");
+
+
+                    String[] categories = listLanguages.toArray(new String[0]);
+                    Double[] values1 = listCountries.toArray(new Double[0]);
+                    Double[] values2 = listSpeakers.toArray(new Double[0]);
+//-----------------------------------------------------------------------------------------------------------
+
+                    XWPFChart chart = run4.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 10, XDDFChart.DEFAULT_HEIGHT * 15);
+                    XDDFChartAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    bottomAxis.setTitle(series[0]);
+                    XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+                    leftAxis.setTitle(series[0] + "," + series[1]);
+                    leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+                    leftAxis.setMajorTickMark(AxisTickMark.OUT);
+                    leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
+
+                    final int numOfPoints = categories.length;
+                    final String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_LANGUAGES, COLUMN_LANGUAGES));
+                    final String valuesDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_COUNTRIES, COLUMN_COUNTRIES));
+                    final String valuesDataRange2 = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_SPEAKERS, COLUMN_SPEAKERS));
+                    final XDDFDataSource<?> categoriesData = XDDFDataSourcesFactory.fromArray(categories, categoryDataRange, COLUMN_LANGUAGES);
+                    final XDDFNumericalDataSource<? extends Number> valuesData = XDDFDataSourcesFactory.fromArray(values1, valuesDataRange, COLUMN_COUNTRIES);
+                    valuesData.setFormatCode("General");
+                    values1[0] = 5.0; // if you ever want to change the underlying data, it has to be done before building the data source
+                    final XDDFNumericalDataSource<? extends Number> valuesData2 = XDDFDataSourcesFactory.fromArray(values2, valuesDataRange2, COLUMN_SPEAKERS);
+                    valuesData2.setFormatCode("General");
+
+
+                    XDDFBarChartData bar = (XDDFBarChartData) chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
+                    bar.setBarGrouping(BarGrouping.STANDARD);
+
+
+                    XDDFBarChartData.Series series1 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData);
+                    series1.setTitle(series[0], chart.setSheetTitle(series[0], COLUMN_COUNTRIES));
+
+                    XDDFBarChartData.Series series2 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData2);
+                    series2.setTitle(series[1], chart.setSheetTitle(series[1], COLUMN_SPEAKERS));
+
+                    bar.setVaryColors(true);
+                    bar.setBarDirection(BarDirection.COL);
+                    chart.plot(bar);
+//-----------------------------------------CHART-----------------------------------------------------------------------------------------------------
+                    XDDFChartLegend legend = chart.getOrAddLegend();
+                    legend.setPosition(LegendPosition.LEFT);
+                    legend.setOverlay(false);
+
+                    chart.setTitleText(chartTitle);
+                    chart.setTitleOverlay(false);
+                    chart.setAutoTitleDeleted(false);
+
+
+                    OutputStream fileOut = new FileOutputStream(file);
+                    xwpfDocument.write(fileOut);
+                    fileOut.close();
+                    Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.getCause();
+                    Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 
+
+        private void exportdoc2 () throws IOException, InvalidFormatException {
+            try {
+                try {
+                    File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
+                    if (!exportDir.exists()) {
+                        exportDir.mkdirs();
+                    }
+                    try {
+                        File file = new File(exportDir, "xwpf_example.docx");
+                        file.createNewFile();
+                        try {
+                            XWPFDocument xwpfDocument = new XWPFDocument();
+                            XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
+                            XWPFRun run3 = xwpfParagraph.createRun();
+                            XDDFChart chart = run3.getDocument().createChart();
+                            XDDFChartAxis axis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+                            XDDFValueAxis valueAxis = chart.createValueAxis(AxisPosition.BOTTOM);
+                            XDDFChartData chartData = chart.createData(ChartTypes.BAR, axis, valueAxis);
+                        } catch (Exception e) {
+                            e.getCause();
+                            Toast.makeText(getApplicationContext(), "No chart", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+}
                     /*XDDFChart chart = run3.getDocument().createChart();
                     XDDFCategoryAxis categoryAxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
                     categoryAxis.getOrAddMajorGridProperties().getLineProperties().addDashStop();
@@ -196,145 +352,3 @@ public class XWPFWbk extends AppCompatActivity {
                     //XDDFLegendEntry legendEntry= chartLegend.addEntry();
                     //XDDFTextBody textBody=legendEntry.getTextBody();
                     //valueAxis.setTitle("Title");*/
-
-
-
-                    FileOutputStream fileOut = new FileOutputStream(file);
-                    xwpfDocument.write(fileOut);
-                    fileOut.close();
-                    Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.getCause();
-                    Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
-        }
-    }
-private void insertChart(XWPFRun run4){
-    try {
-        File file2 = new File(Environment.getExternalStorageDirectory()+"/Documents/bar-chart-data.txt");
-        try (BufferedReader modelReader = Files.newBufferedReader(file2.toPath(), StandardCharsets.UTF_8)) {
-
-            String chartTitle = modelReader.readLine();  // first line is chart title
-            String seriesText = modelReader.readLine();
-            String[] series = seriesText == null ? new String[0] : seriesText.split(",");
-
-            // Category Axis Data
-            List<String> listLanguages = new ArrayList<>(10);
-
-            // Values
-            List<Double> listCountries = new ArrayList<>(10);
-            List<Double> listSpeakers = new ArrayList<>(10);
-
-            // set model
-            String ln;
-            while ((ln = modelReader.readLine()) != null) {
-                String[] vals = ln.split(",");
-                listCountries.add(Double.valueOf(vals[0]));
-                listSpeakers.add(Double.valueOf(vals[1]));
-                listLanguages.add(vals[2]);
-            }
-
-            String[] categories = listLanguages.toArray(new String[0]);
-            Double[] values1 = listCountries.toArray(new Double[0]);
-            Double[] values2 = listSpeakers.toArray(new Double[0]);
-
-
-            XWPFChart chart = run4.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 10, XDDFChart.DEFAULT_HEIGHT * 15);
-            XDDFChartAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
-            bottomAxis.setTitle(series[2]);
-            XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
-            leftAxis.setTitle(series[0] + "," + series[1]);
-            leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
-            leftAxis.setMajorTickMark(AxisTickMark.OUT);
-            leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
-
-            final int numOfPoints = categories.length;
-            final String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_LANGUAGES, COLUMN_LANGUAGES));
-            final String valuesDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_COUNTRIES, COLUMN_COUNTRIES));
-            final String valuesDataRange2 = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_SPEAKERS, COLUMN_SPEAKERS));
-            final XDDFDataSource<?> categoriesData = XDDFDataSourcesFactory.fromArray(categories, categoryDataRange, COLUMN_LANGUAGES);
-            final XDDFNumericalDataSource<? extends Number> valuesData = XDDFDataSourcesFactory.fromArray(values1, valuesDataRange, COLUMN_COUNTRIES);
-            valuesData.setFormatCode("General");
-            values1[6] = 16.0; // if you ever want to change the underlying data, it has to be done before building the data source
-            final XDDFNumericalDataSource<? extends Number> valuesData2 = XDDFDataSourcesFactory.fromArray(values2, valuesDataRange2, COLUMN_SPEAKERS);
-            valuesData2.setFormatCode("General");
-
-
-            XDDFBarChartData bar = (XDDFBarChartData) chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
-            bar.setBarGrouping(BarGrouping.CLUSTERED);
-
-            XDDFBarChartData.Series series1 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData);
-            series1.setTitle(series[0], chart.setSheetTitle(series[0], COLUMN_COUNTRIES));
-
-            XDDFBarChartData.Series series2 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData2);
-            series2.setTitle(series[1], chart.setSheetTitle(series[1], COLUMN_SPEAKERS));
-
-            bar.setVaryColors(true);
-            bar.setBarDirection(BarDirection.COL);
-            chart.plot(bar);
-            XDDFChartLegend legend = chart.getOrAddLegend();
-            legend.setPosition(LegendPosition.LEFT);
-            legend.setOverlay(false);
-
-            chart.setTitleText(chartTitle);
-            chart.setTitleOverlay(false);
-            chart.setAutoTitleDeleted(false);
-          ;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-}
-    private void exportdoc2() throws IOException, InvalidFormatException {
-        try {
-            try {
-                File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
-                if (!exportDir.exists()) {
-                    exportDir.mkdirs();
-                }
-                try {
-                    File file = new File(exportDir, "xwpf_example.docx");
-                    file.createNewFile();
-                    try {
-                        XWPFDocument xwpfDocument = new XWPFDocument();
-                        XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
-                        XWPFRun run3 = xwpfParagraph.createRun();
-                        XDDFChart chart = run3.getDocument().createChart();
-                        XDDFChartAxis axis= chart.createCategoryAxis(AxisPosition.BOTTOM);
-                        XDDFValueAxis valueAxis=chart.createValueAxis(AxisPosition.BOTTOM);
-                        XDDFChartData chartData=chart.createData(ChartTypes.BAR,axis,valueAxis);
-                    } catch (Exception e) {
-                        e.getCause();
-                        Toast.makeText(getApplicationContext(), "No chart", Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private   List<XDDFValueAxis> getValueAxes(){
-        List<InputData>inputData=new ArrayList<>();
-        InputData input= new InputData();
-        input.setTwo(Float.parseFloat(String.valueOf(2)));
-        input.setEleven(Float.parseFloat(String.valueOf(11)));
-        input.setThree(Float.parseFloat(String.valueOf(3)));
-        input.setThree(Float.parseFloat(String.valueOf(3)));
-        inputData.add(input);
-        return getValueAxes();
-    }
-}
