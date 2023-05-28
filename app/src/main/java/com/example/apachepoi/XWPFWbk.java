@@ -158,11 +158,7 @@ public class XWPFWbk extends AppCompatActivity {
                     cell1.setText("item 1");
                     cell1.getTableRow().getCell(1).setText("5");
 
-
-
-
                     xwpfRun.addBreak();
-
 
                     XWPFParagraph paragraph = xwpfRun.getDocument().createParagraph();
                     XWPFRun run2 = paragraph.createRun();
@@ -299,9 +295,6 @@ public class XWPFWbk extends AppCompatActivity {
         }
     }
 
-
-
-
         private void exportdoc2 () throws IOException, InvalidFormatException {
             try {
                 try {
@@ -313,23 +306,92 @@ public class XWPFWbk extends AppCompatActivity {
                         File file = new File(exportDir, "xwpf_example.docx");
                         file.createNewFile();
                         try {
+                            String chartTitle = "10 languages with most speakers as first language";  // first line is chart title
+                            String seriesText = "Speakers,Language";
+                            String[] series = seriesText.split(",");
+
+                            // Category Axis Data"seriesText)
+                            List<String> listLanguages = new ArrayList<>(5);
+                            // Values
+                            List<Double> listCountries = new ArrayList<>(5);
+                            List<Double> listSpeakers = new ArrayList<>(5);
+                            //String[] vals = ln.split(",");
+                            listCountries.add(58d);
+                            listCountries.add(4d);
+                            listCountries.add(28d);
+                            listCountries.add(118d);
+                            listCountries.add(4d);
+
+
+                            listSpeakers.add(315d);
+                            listSpeakers.add(243d);
+                            listSpeakers.add(129d);
+                            listSpeakers.add(378d);
+                            listSpeakers.add(260d);
+
+
+                            listLanguages.add("english");
+                            listLanguages.add("spanish");
+                            listLanguages.add("french");
+                            listLanguages.add("chinese");
+                            listLanguages.add("latin");
+
+
+                            String[] categories = listLanguages.toArray(new String[0]);
+                            Double[] values1 = listCountries.toArray(new Double[0]);
+                            Double[] values2 = listSpeakers.toArray(new Double[0]);
+
                             XWPFDocument xwpfDocument = new XWPFDocument();
                             XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                             XWPFRun run3 = xwpfParagraph.createRun();
-                            XDDFChart chart = run3.getDocument().createChart();
+                            XDDFChart chart = run3.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 10, XDDFChart.DEFAULT_HEIGHT * 15);
                             XDDFChartAxis axis = chart.createCategoryAxis(AxisPosition.BOTTOM);
-                            XDDFValueAxis valueAxis = chart.createValueAxis(AxisPosition.BOTTOM);
-                            XDDFChartData chartData = chart.createData(ChartTypes.BAR, axis, valueAxis);
+                            axis.setTitle(series[0]);
+                            XDDFValueAxis valueAxis = chart.createValueAxis(AxisPosition.LEFT);
+                            axis.setTitle(series[0]+","+series[1]);
+
+                            valueAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+                            valueAxis.setMajorTickMark(AxisTickMark.OUT);
+                            valueAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
+                            final int numOfPoints = categories.length;
+                            final String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_LANGUAGES, COLUMN_LANGUAGES));
+                            final String valuesDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_COUNTRIES, COLUMN_COUNTRIES));
+                            final String valuesDataRange2 = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_SPEAKERS, COLUMN_SPEAKERS));
+                            final XDDFDataSource<?> categoriesData = XDDFDataSourcesFactory.fromArray(categories, categoryDataRange, COLUMN_LANGUAGES);
+                            final XDDFNumericalDataSource<? extends Number> valuesData = XDDFDataSourcesFactory.fromArray(values1, valuesDataRange, COLUMN_COUNTRIES);
+                            valuesData.setFormatCode("General");
+                            values1[0] = 5.0; // if you ever want to change the underlying data, it has to be done before building the data source
+                            final XDDFNumericalDataSource<? extends Number> valuesData2 = XDDFDataSourcesFactory.fromArray(values2, valuesDataRange2, COLUMN_SPEAKERS);
+                            valuesData2.setFormatCode("General");
+
+
+                            XDDFBarChartData bar = (XDDFBarChartData) chart.createData(ChartTypes.BAR, axis, valueAxis);
+                            bar.setBarGrouping(BarGrouping.STANDARD);
+
+
+                            XDDFBarChartData.Series series1 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData);
+                            series1.setTitle(series[0], chart.setSheetTitle(series[0], COLUMN_COUNTRIES));
+
+                            XDDFBarChartData.Series series2 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData2);
+                            series2.setTitle(series[1], chart.setSheetTitle(series[1], COLUMN_SPEAKERS));
+
+                            bar.setVaryColors(true);
+                            bar.setBarDirection(BarDirection.COL);
+                            chart.plot(bar);
+                            OutputStream fileOut = new FileOutputStream(file);
+                            xwpfDocument.write(fileOut);
+                            fileOut.close();
+                            Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             e.getCause();
-                            Toast.makeText(getApplicationContext(), "No chart", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
