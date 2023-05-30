@@ -18,6 +18,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xddf.usermodel.XDDFFillProperties;
 import org.apache.poi.xddf.usermodel.XDDFShapeProperties;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
@@ -347,8 +348,8 @@ public class XWPFWbk extends AppCompatActivity {
                         File file = new File(exportDir, "xwpf_example.docx");
                         file.createNewFile();
                         try {
-                            String chartTitle = "10 languages with most speakers as first language";  // first line is chart title
-                            String seriesText2 = "Young (Blue),Old (orange)";
+                            String chartTitle = "Hobbies";  // first line is chart title
+                            String seriesText2 = "Hobbies";
                             String[] seriesline = seriesText2.split(",");
 
                             List<String> listLanguages2 = new ArrayList<>(5);
@@ -369,41 +370,16 @@ public class XWPFWbk extends AppCompatActivity {
                             listLanguages2.add("dance");
                             listLanguages2.add("sleep");
                             listLanguages2.add("other");
-                            String[] linecategories = listLanguages2.toArray(new String[0]);
-                            Double[] lvalues1 = listCountries2.toArray(new Double[0]);
-                            Double[] lvalues2 = listSpeakers2.toArray(new Double[0]);
+
+
                             XWPFDocument xwpfDocument = new XWPFDocument();
                             XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                             XWPFRun run3 = xwpfParagraph.createRun();
                             XWPFChart chart2 = run3.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 5, XDDFChart.DEFAULT_HEIGHT * 7);
                             XDDFChartAxis xaxisline = chart2.createCategoryAxis(AxisPosition.BOTTOM);
-                            xaxisline.setTitle(chartTitle);
-                            XDDFValueAxis yvalueAxisline = chart2.createValueAxis(AxisPosition.LEFT);
-                            xaxisline.setTitle(seriesline[0]+","+seriesline[1]);
-                            yvalueAxisline.setCrosses(AxisCrosses.AUTO_ZERO);
-                            yvalueAxisline.setMajorTickMark(AxisTickMark.OUT);
-                            yvalueAxisline.setCrossBetween(AxisCrossBetween.BETWEEN);
-                            final int lnumOfPoints = linecategories.length;
-                            final String categoryDataRange2 = chart2.formatRange(new CellRangeAddress(1, lnumOfPoints, COLUMN_LANGUAGES, COLUMN_LANGUAGES));
-                            final String lineDataRange = chart2.formatRange(new CellRangeAddress(1, lnumOfPoints, COLUMN_COUNTRIES, COLUMN_COUNTRIES));
-                            final String lineDataRange2 = chart2.formatRange(new CellRangeAddress(1, lnumOfPoints, COLUMN_SPEAKERS, COLUMN_SPEAKERS));
-                            final XDDFDataSource<?> categoriesLData = XDDFDataSourcesFactory.fromArray(linecategories, categoryDataRange2, COLUMN_LANGUAGES);
-                            final XDDFNumericalDataSource<? extends Number> lvaluesData = XDDFDataSourcesFactory.fromArray(lvalues1, lineDataRange, COLUMN_COUNTRIES);
-                            lvaluesData.setFormatCode("General");
-                            lvalues1[0] = 5.0; // if you ever want to change the underlying data, it has to be done before building the data source
-                            final XDDFNumericalDataSource<? extends Number> lvaluesData2 = XDDFDataSourcesFactory.fromArray(lvalues2, lineDataRange2, COLUMN_SPEAKERS);
-                            lvaluesData2.setFormatCode("General");
-                            XDDFChartData line = (XDDFChartData) chart2.createData(ChartTypes.BAR3D, xaxisline, yvalueAxisline);
-                            line.setVaryColors(true);
-                            chart2.setTitleText("Hobbies");
+                            xaxisline.setTitle(seriesline[0]);
 
-                            XDDFChartData.Series lseries1 = (XDDFChartData.Series) line.addSeries(categoriesLData, lvaluesData);
-                            lseries1.setTitle(seriesline[0], chart2.setSheetTitle(seriesline[0], COLUMN_COUNTRIES));
-                            XDDFChartData.Series lseries2 = (XDDFChartData.Series) line.addSeries(categoriesLData, lvaluesData2);
-                            lseries2.setTitle(seriesline[1], chart2.setSheetTitle(seriesline[1], COLUMN_SPEAKERS));
-                            line.setVaryColors(true);
 
-                            chart2.plot(line);
                             OutputStream fileOut = new FileOutputStream(file);
                             xwpfDocument.write(fileOut);
                             fileOut.close();
