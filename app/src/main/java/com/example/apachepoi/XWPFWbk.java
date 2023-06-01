@@ -247,6 +247,8 @@ public class XWPFWbk extends AppCompatActivity {
                     series1.setTitle(series[0], chart.setSheetTitle(series[0], COLUMN_COUNTRIES));
                     XDDFBarChartData.Series series2 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData2);
                     series2.setTitle(series[1], chart.setSheetTitle(series[1], COLUMN_SPEAKERS));
+                    
+
                     bar.setVaryColors(true);
                     bar.setBarDirection(BarDirection.COL);
                     chart.plot(bar);
@@ -348,36 +350,23 @@ public class XWPFWbk extends AppCompatActivity {
                         File file = new File(exportDir, "xwpf_example.docx");
                         file.createNewFile();
                         try {
-                            String chartTitle = "Hobbies";  // first line is chart title
-                            String seriesText2 = "Hobbies";
-                            String[] seriesline = seriesText2.split(",");
-
-                            List<String> listLanguages2 = new ArrayList<>(5);
-                            List<Double> listCountries2 = new ArrayList<>(5);
-                            List<Double> listSpeakers2 = new ArrayList<>(5);
-                            listCountries2.add(58d);
-                            listCountries2.add(4d);
-                            listCountries2.add(28d);
-                            listCountries2.add(118d);
-                            listCountries2.add(4d);
-                            listSpeakers2.add(315d);
-                            listSpeakers2.add(243d);
-                            listSpeakers2.add(129d);
-                            listSpeakers2.add(378d);
-                            listSpeakers2.add(260d);
-                            listLanguages2.add("Walk");
-                            listLanguages2.add("listen to music");
-                            listLanguages2.add("dance");
-                            listLanguages2.add("sleep");
-                            listLanguages2.add("other");
-
 
                             XWPFDocument xwpfDocument = new XWPFDocument();
                             XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                             XWPFRun run3 = xwpfParagraph.createRun();
                             XWPFChart chart2 = run3.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 5, XDDFChart.DEFAULT_HEIGHT * 7);
                             XDDFChartAxis xaxisline = chart2.createCategoryAxis(AxisPosition.BOTTOM);
-                            xaxisline.setTitle(seriesline[0]);
+                            xaxisline.setTitle("Title");
+                            XDDFValueAxis yvalueAxisline = chart2.createValueAxis(AxisPosition.LEFT);
+                            xaxisline.setTitle("Amount");
+                            yvalueAxisline.setCrosses(AxisCrosses.MAX);
+                            XDDFPieChartData pie = (XDDFPieChartData) chart2.createData(ChartTypes.PIE, xaxisline, yvalueAxisline);
+                            /*XDDFChartData.Series lseries1 = (XDDFChartData.Series) pie.addSeries(categoriesLData, lvaluesData);
+                            lseries1.setTitle(seriesline[0], chart2.setSheetTitle(seriesline[0], COLUMN_COUNTRIES));
+                            pie.setVaryColors(true);
+                            pie.setFirstSliceAngle(90);*/
+
+                            chart2.plot(pie);
 
 
                             OutputStream fileOut = new FileOutputStream(file);
