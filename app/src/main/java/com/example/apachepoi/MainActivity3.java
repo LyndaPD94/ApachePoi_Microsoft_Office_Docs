@@ -49,8 +49,11 @@ public class MainActivity3 extends AppCompatActivity {
             case R.id.mmenu:
                 MainMenu();
                 return true;
-            case R.id.ventas:
-                Ventas();
+            case R.id.newsale:
+                NewSale();
+                return true;
+            case R.id.saleshist:
+                SalesHist();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -89,7 +92,6 @@ public class MainActivity3 extends AppCompatActivity {
 
                     SQLiteDatabase db = helper.getWritableDatabase();
                     ContentValues values = new ContentValues();
-
                     values.put(Structure_BBDD.COLUMNA2, DateNow);
                     values.put(Structure_BBDD.COLUMNA3, descrip2.getText().toString());
                     values.put(Structure_BBDD.COLUMNA4, amt2.getText().toString());
@@ -166,7 +168,14 @@ public class MainActivity3 extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
         }
     }
-    private void Ventas() {
+    private void NewSale() {
+        try {
+            Intent intent = new Intent(this, MainActivity3.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
+        }
+    } private void SalesHist() {
         try {
             Intent intent = new Intent(this, MainActivity2.class);
             startActivity(intent);

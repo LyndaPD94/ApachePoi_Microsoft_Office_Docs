@@ -37,4 +37,6 @@
     <string name="activity">Activity</string>
     <string name="datelc">Date:</string>
     <string name="new_sales_transaction">New Sales Transaction</string>
+    <string name="input_sql_data">Input SQL Data</string>
+    <string name="export_sql_hssf">Export SQL HSSF</string>
 </resources>

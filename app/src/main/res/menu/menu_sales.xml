@@ -4,9 +4,11 @@
     android:id="@+id/mmenu"
     android:title="@string/main_menu1"
     android:visible="true" />
-
+    <item
+        android:id="@+id/saleshist"
+        android:title= "@string/sales_history"/>
     <item
         android:id="@+id/newsale"
-        android:title="@string/new_sales_transaction" />
+        android:title= "@string/new_sales_transaction"/>
 
 </menu>

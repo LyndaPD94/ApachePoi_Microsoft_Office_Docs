@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#EE4300</color>
-    <color name="purple_700">#B30039</color>
-    <color name="teal_200">#DAA403</color>
-    <color name="teal_700">#300187</color>
+    <color name="ApPink_200">#FC86C3</color>
+    <color name="ApOrange_500">#EE4300</color>
+    <color name="ApRed_700">#B30039</color>
+    <color name="ApYellow_200">#DAA403</color>
+    <color name="ApInk_blue">#300187</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

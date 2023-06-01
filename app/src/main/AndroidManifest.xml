@@ -43,7 +43,7 @@
         <activity
             android:name=".HssfWbk"
             android:label="HSSF Workbook"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -58,6 +58,22 @@
             </intent-filter>
 
             <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MainActivity2"
+            android:label="@string/sales_history"
+            android:exported="false">
+         <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MainActivity3"
+            android:label="@string/sales"
+            android:exported="false">
+        <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>

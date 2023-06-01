@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn2hssf,btn2xwpf,btn2hslf,btn2xssfwbk;
+    Button btn2hssf,btn2xwpf,btn2hslf,btn2xssfwbk,btninput;
     ActivityResultLauncher<String[]> mPermissionResultlauncher;
     private boolean isReadPermissionGranted = false;
     private boolean isWritePermissionGranted = false;
@@ -30,14 +30,23 @@ public class MainActivity extends AppCompatActivity {
         btn2xwpf=(Button)findViewById(R.id.btn2xwpfwbk);
         btn2hslf=(Button) findViewById(R.id.button2hslfss);
         btn2xssfwbk=(Button) findViewById(R.id.toxssfwbk);
+        btninput=(Button) findViewById(R.id.btninputd);
 
-        btn2hssf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,HssfWbk.class);
-                startActivity(intent);
-            }
-        }); btn2xwpf.setOnClickListener(new View.OnClickListener() {
+                btninput.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       Intent intent= new Intent(MainActivity.this, MainActivity3.class);
+                       startActivity(intent);
+                    }
+                });
+
+                btn2hssf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, HssfWbk.class);
+                        startActivity(intent);
+                    }
+                }); btn2xwpf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,XWPFWbk.class);

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -37,8 +39,8 @@
         android:text="XSSF Workbook" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btninputd"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:text="Button" />
+        android:text="@string/input_sql_data" />
 </LinearLayout>

@@ -42,6 +42,9 @@ public class MainActivity2 extends AppCompatActivity {
             case R.id.newsale:
                 NewSale();
                 return true;
+            case R.id.saleshist:
+                SalesHist();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -71,6 +74,13 @@ public class MainActivity2 extends AppCompatActivity {
     private void NewSale() {
         try {
             Intent intent = new Intent(this, MainActivity3.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
+        }
+    } private void SalesHist() {
+        try {
+            Intent intent = new Intent(this, MainActivity2.class);
             startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();

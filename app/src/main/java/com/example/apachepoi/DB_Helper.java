@@ -12,13 +12,9 @@ import java.util.ArrayList;
 public class DB_Helper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "IER.db";
+    public static final String DATABASE_NAME = "POI.db";
     public static final String TABLE1 = "Sales";
-    public static final String TABLE2 = "Expenditure";
-    public static final String TABLE3 = "Records";
-    public static final String TABLE4 = "Materials";
-    public static final String TABLE5 = "OMaterials";
-
+    public static final String TABLE2 = "Materials";
 
     public DB_Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,10 +28,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         DB_Helper helper = null;
         db = helper.getWritableDatabase();
         db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES1);
-        db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES2);
-        db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES3);
-        db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES4);
-        db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES5);
+
 
     }
 
@@ -53,9 +46,6 @@ public class DB_Helper extends SQLiteOpenHelper {
     public SQLiteDatabase getReadableDatabase(SQLiteDatabase db, String s) {
         db.execSQL("select * from " + TABLE1);
         db.execSQL("select * from " + TABLE2);
-        db.execSQL("select * from " + TABLE3);
-        db.execSQL("select * from " + TABLE4);
-        db.execSQL("select * from " + TABLE5);
         s.getBytes(StandardCharsets.UTF_8).toString();
         return null;
     }
@@ -63,9 +53,6 @@ public class DB_Helper extends SQLiteOpenHelper {
     public SQLiteDatabase getWriteableDatabase(SQLiteDatabase db, String s) {
         db.execSQL("select * from " + TABLE1);
         db.execSQL("select * from " + TABLE2);
-        db.execSQL("select * from " + TABLE3);
-        db.execSQL("select * from " + TABLE4);
-        db.execSQL("select * from " + TABLE5);
         return null;
 
     }
@@ -77,9 +64,9 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public Cursor exportAll() {
-        ArrayList<Materials> data = null;
+        ArrayList<Sales> data = null;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur = db.rawQuery("SELECT * FROM " + TABLE4, null);
+        Cursor cur = db.rawQuery("SELECT * FROM " + TABLE1, null);
 
         return cur;
 

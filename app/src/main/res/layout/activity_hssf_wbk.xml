@@ -28,4 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:text="@string/export_xls" />
+
+    <Button
+        android:id="@+id/exphssfsql"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:text="@string/export_sql_hssf" />
 </LinearLayout>
