@@ -2,6 +2,7 @@ package com.example.apachepoi;
 
 
 
+import static com.example.apachepoi.Structure_BBDD.DATABASE_NAME;
 import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
 import android.content.ContentValues;
@@ -65,7 +66,7 @@ public class MainActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         DB_Helper hiveDB_helper=new DB_Helper(MainActivity3.this);
-        helper=new ListHelper(getApplicationContext(),"IER.db",null,1);
+        helper=new ListHelper(getApplicationContext(),DATABASE_NAME,null,1);
 
 
         transid=(EditText) findViewById(R.id.transid);
@@ -137,7 +138,6 @@ public class MainActivity3 extends AppCompatActivity {
                             null               // The sort order
                     );
                     cursor.moveToFirst();
-
                     date2.setText("");
                     descrip2.setText("");
                     amt2.setText("");

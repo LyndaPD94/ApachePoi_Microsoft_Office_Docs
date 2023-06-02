@@ -55,7 +55,7 @@ public SalesAdapter(ArrayList<Sales>data){this.data=data;}
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             DB_helper=new DB_Helper(itemView.getContext());
-            helper= new DB_Helper(itemView.getContext().getApplicationContext(), "IER.db", null, 1);
+            helper= new DB_Helper(itemView.getContext().getApplicationContext(), "POI.db", null, 1);
 
             btnupdate=(Button)itemView.findViewById(R.id.btnupdate5) ;
             transid4=(EditText) itemView.findViewById(R.id.transid4);

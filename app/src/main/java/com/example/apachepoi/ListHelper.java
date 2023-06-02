@@ -14,7 +14,6 @@ public class ListHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "POI.db";
     public static final String TABLE1 = "Sales";
-    public static final String TABLE2 = "Materials";
 
     public ListHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, 1);
@@ -118,6 +117,7 @@ public class ListHelper extends SQLiteOpenHelper {
         values11.put(Structure_BBDD.COLUMND6, "2.87");
         values11.put(Structure_BBDD.COLUMND7, "0.36");
         db.insert(Structure_BBDD.TABLE2, null, values11);
+
 
     }
     public Cursor exportAll() {

@@ -1,6 +1,7 @@
 package com.example.apachepoi;
 
 
+import static com.example.apachepoi.Structure_BBDD.DATABASE_NAME;
 import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
 import android.content.Intent;
@@ -55,7 +56,7 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         DB_Helper hiveDB_helper=new DB_Helper(MainActivity2.this);
-        helper= new ListHelper(getApplicationContext(),"IER.db", null, 1);
+        helper= new ListHelper(getApplicationContext(),DATABASE_NAME, null, 1);
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         data=new ArrayList<>();
 
