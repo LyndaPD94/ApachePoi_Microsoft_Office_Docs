@@ -14,7 +14,7 @@
     <EditText
         android:id="@+id/doocxtv"
         android:layout_width="match_parent"
-        android:layout_height="151dp"
+        android:layout_height="123dp"
         android:autofillHints=""
         android:hint="@string/insert_data"
         android:inputType="textPersonName" />
@@ -28,4 +28,10 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:text="@string/export_docx" />
+
+    <Button
+        android:id="@+id/expsqldoc"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:text="@string/export_sql_docx" />
 </LinearLayout>

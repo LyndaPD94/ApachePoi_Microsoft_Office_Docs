@@ -138,7 +138,7 @@ public class HssfWbk extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
 
@@ -149,13 +149,12 @@ public class HssfWbk extends AppCompatActivity {
         try {
             File dbFile = getDatabasePath(DATABASE_NAME);
             helper = new DB_Helper(getApplicationContext(), "POI.db", null, 1);
-            DB_Helper dbhelper = new DB_Helper(getApplicationContext());
             System.out.println(dbFile);
             File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
             if (!exportDir.exists()) {
                 exportDir.mkdirs();
             }
-            File file = new File(exportDir, "datos.xls");
+            File file = new File(exportDir, "example_hssf_sql.xls");
             file.createNewFile();
             try {
                 if (file.exists()) {
@@ -167,13 +166,11 @@ public class HssfWbk extends AppCompatActivity {
                 HSSFWorkbook wb = new HSSFWorkbook();
                 SQLiteDatabase db = helper.getWriteableDatabase();
                 Cursor cur = helper.exportAll();
-                Sheet sheet = wb.createSheet("Materials Info");
+                Sheet sheet = wb.createSheet("Sqlite data");
                 data = new ArrayList<>();
                 db = helper.getReadableDatabase();
-                Materials materials = null;
-                cur = db.rawQuery("select * from " + TABLE1, null);
                 Row row = sheet.createRow(0);
-                row.setHeightInPoints(12);
+                cur = db.rawQuery("select * from " + TABLE1, null);
                 while (cur.moveToNext()) {
                     String arrStr[] = {
                             String.valueOf(cur.getString(0)),
@@ -200,7 +197,6 @@ public class HssfWbk extends AppCompatActivity {
                             cell13.setCellValue(cur.getFloat(5));
                             Cell cell14 = row8.createCell(6);
                             cell14.setCellValue(cur.getString(6));
-
                         }
                     }
                 }
@@ -221,8 +217,9 @@ public class HssfWbk extends AppCompatActivity {
                 cell6.setCellValue(cur.getColumnName(6));
                 cur.close();
 //------------------------------------------------------------------------------------------------
-                Row rowa=sheet.getRow(0);
-                rowa.setHeightInPoints(Float.parseFloat("12.75"));
+
+                Row rowa = sheet.getRow(0);
+                rowa.setHeightInPoints(Float.parseFloat("16.75"));
                 Cell cella = rowa.getCell(0);
                 cella.getCellStyle().setAlignment(HorizontalAlignment.CENTER);
 
@@ -233,6 +230,7 @@ public class HssfWbk extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
 
