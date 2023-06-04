@@ -217,12 +217,10 @@ public class HssfWbk extends AppCompatActivity {
                 cell6.setCellValue(cur.getColumnName(6));
                 cur.close();
 //------------------------------------------------------------------------------------------------
-
                 Row rowa = sheet.getRow(0);
-                rowa.setHeightInPoints(Float.parseFloat("16.75"));
+                rowa.setHeightInPoints(Float.parseFloat("12.75"));
                 Cell cella = rowa.getCell(0);
                 cella.getCellStyle().setAlignment(HorizontalAlignment.CENTER);
-
 //--------------------------------------------------------------------------------------------------
                 FileOutputStream fileOut = new FileOutputStream(file);
                 wb.write(fileOut);

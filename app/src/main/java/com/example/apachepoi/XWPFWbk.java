@@ -461,22 +461,22 @@ private void exportsqldoc (){
 
                     XWPFTableCell cell1=row.createCell();
                     cell1.setText(cur.getColumnName(0));
-                    cell1.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell2=row.createCell();
                     cell2.setText(cur.getColumnName(1));
-                    cell2.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell3=row.createCell();
                     cell3.setText(cur.getColumnName(2));
-                    cell3.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell4=row.createCell();
                     cell4.setText(cur.getColumnName(3));
-                    cell4.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell5=row.createCell();
                     cell5.setText(cur.getColumnName(4));
-                    cell5.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell6=row.createCell();
                     cell6.setText(cur.getColumnName(5));
-                    cell6.setWidth("12");
+                    cell1.setWidthType(TableWidthType.AUTO);
                     XWPFTableCell cell7=row.createCell();
                     cell7.setText(cur.getColumnName(6));
                     cell7.setWidth("12");
