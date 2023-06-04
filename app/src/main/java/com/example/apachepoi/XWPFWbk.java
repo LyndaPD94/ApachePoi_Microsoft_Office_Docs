@@ -5,6 +5,7 @@ import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.ColorSpace;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,10 +22,13 @@ import org.apache.poi.hslf.model.HeadersFooters;
 
 import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
+import org.apache.poi.hwpf.usermodel.TableCell;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.wp.usermodel.HeaderFooterType;
@@ -61,6 +65,7 @@ import org.apache.poi.xwpf.usermodel.IBody;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.TableRowAlign;
+import org.apache.poi.xwpf.usermodel.TableRowHeightRule;
 import org.apache.poi.xwpf.usermodel.TableWidthType;
 import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
@@ -90,6 +95,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHdrFtr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.impl.CTStyleImpl;
 
@@ -146,7 +152,7 @@ public class XWPFWbk extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    exportdoc2();
+                    exportdoc();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -171,21 +177,25 @@ public class XWPFWbk extends AppCompatActivity {
                     xwpfRun.setText("XWPF tiene una API central bastante estable, que proporciona acceso de lectura y escritura a las partes principales de un archivo de .docx Word, pero no está completo. Para algunas cosas, puede ser necesario sumergirse en el XMLBeans de bajo nivel objetos para manipular la estructura OOXML. Para la extracción de texto básica, utilice org.apache.poi.xwpf.extractor.XWPFWordExtractor. Acepta una entrada stream o un XWPFDocument. El método getText() se puede utilizar para Obtenga el texto de todos los párrafos, junto con tablas, encabezados, etc.");
                     xwpfRun.setFontFamily("Arial");
                     xwpfRun.addBreak();
+
                     XWPFTable table = xwpfDocument.createTable();
                     XWPFTableRow row = table.getRow(0);
                     XWPFTableCell cell0 = row.getCell(0);
-                    cell0.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                    XWPFParagraph paragraph=cell0.getXWPFDocument().createParagraph();
+                    paragraph.setAlignment(ParagraphAlignment.CENTER);
                     cell0.setText("Description");
+                    cell0.setColor("78C200");
                     cell0.getTableRow().createCell();
                     cell0.getTableRow().getCell(1).setText("Amount");
+                    cell0.getTableRow().getCell(1).setColor("78C200");
                     XWPFTableRow row2 = table.createRow();
                     XWPFTableCell cell1 = row2.getCell(0);
                     cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
                     cell1.setText("item 1");
                     cell1.getTableRow().getCell(1).setText("5");
                     xwpfRun.addBreak();
-                    XWPFParagraph paragraph = xwpfRun.getDocument().createParagraph();
-                    XWPFRun run2 = paragraph.createRun();
+                    XWPFParagraph paragraph0 = xwpfRun.getDocument().createParagraph();
+                    XWPFRun run2 = paragraph0.createRun();
                     run2.addBreak();
                     run2.setFontFamily("Times New Roman");
                     run2.setText("Desde un XWPFParagraph, es posible obtener los elementos XWPFRun existentes que componen el texto. Para agregar nuevo texto, el método createRun() agregará un nuevo XWPFRun al final de la lista. insertNewRun(int) puede ser se utiliza para agregar un nuevo XWPFRun en un punto específico de la párrafo.Una vez que tenga un XWPFRun, puede usar el método setText(String) para realizar cambios en el texto. Para agregar elementos de espacio en blanco como tabulaciones y saltos de línea, es necesario utilizar métodos como addTab() y addCarriageReturn().El texto del documento también se encuentra en la corriente principal. Su inicio location se da como FIB.fcMin y su longitud viene dada en bytes por FIB.ccpText. Estos dos valores no son muy útiles para obtener el texto Debido a Unicode. Puede haber texto Unicode entremezclado con ASCII Mensaje de texto. Eso nos lleva a la mesa de piezas." +
@@ -430,7 +440,8 @@ private void exportsqldoc (){
                     XWPFTable table = xwpfDocument.createTable();
                     data = new ArrayList<>();
                     db = helper.getReadableDatabase();
-                    XWPFTableRow row = table.createRow();
+                    XWPFTableRow row = table.getRow(0);
+                    XWPFTableCell cell=row.getCell(0);
                     cur = db.rawQuery("select * from " + TABLE1, null);
                     while (cur.moveToNext()) {
                         String arrStr[] = {
@@ -452,34 +463,35 @@ private void exportsqldoc (){
                                 row0.createCell().setText(cur.getString(5));
                                 row0.createCell().setText(cur.getString(6));
                                 row0.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
-
                             }
                         }
                     }
-                    table.setColBandSize(12);
-
-
+                    table.getRow(0).setHeight(10);
+                    table.getRow(0).setHeightRule(TableRowHeightRule.AUTO);
+                    cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
                     XWPFTableCell cell1=row.createCell();
                     cell1.setText(cur.getColumnName(0));
                     cell1.setWidthType(TableWidthType.AUTO);
+                    cell1.setColor("D44012");
                     XWPFTableCell cell2=row.createCell();
                     cell2.setText(cur.getColumnName(1));
-                    cell1.setWidthType(TableWidthType.AUTO);
+                    cell2.setColor("D44012");
                     XWPFTableCell cell3=row.createCell();
                     cell3.setText(cur.getColumnName(2));
-                    cell1.setWidthType(TableWidthType.AUTO);
+                    cell3.setColor("D44012");
                     XWPFTableCell cell4=row.createCell();
                     cell4.setText(cur.getColumnName(3));
-                    cell1.setWidthType(TableWidthType.AUTO);
+                    cell4.setColor("D44012");
                     XWPFTableCell cell5=row.createCell();
                     cell5.setText(cur.getColumnName(4));
-                    cell1.setWidthType(TableWidthType.AUTO);
+                    cell5.setColor("D44012");
                     XWPFTableCell cell6=row.createCell();
                     cell6.setText(cur.getColumnName(5));
-                    cell1.setWidthType(TableWidthType.AUTO);
+                    cell6.setColor("D44012");
                     XWPFTableCell cell7=row.createCell();
                     cell7.setText(cur.getColumnName(6));
-                    cell7.setWidth("12");
+                    cell7.setColor("D44012");
+
 
                     cur.close();
 
