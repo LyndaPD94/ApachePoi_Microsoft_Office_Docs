@@ -152,7 +152,7 @@ public class XWPFWbk extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    exportdoc();
+                    exportdocsqltbl2();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -177,23 +177,52 @@ public class XWPFWbk extends AppCompatActivity {
                     xwpfRun.setText("XWPF tiene una API central bastante estable, que proporciona acceso de lectura y escritura a las partes principales de un archivo de .docx Word, pero no está completo. Para algunas cosas, puede ser necesario sumergirse en el XMLBeans de bajo nivel objetos para manipular la estructura OOXML. Para la extracción de texto básica, utilice org.apache.poi.xwpf.extractor.XWPFWordExtractor. Acepta una entrada stream o un XWPFDocument. El método getText() se puede utilizar para Obtenga el texto de todos los párrafos, junto con tablas, encabezados, etc.");
                     xwpfRun.setFontFamily("Arial");
                     xwpfRun.addBreak();
-
+//----------------------------------------------TABLE----------------------------------------------------------
                     XWPFTable table = xwpfDocument.createTable();
                     XWPFTableRow row = table.getRow(0);
-                    XWPFTableCell cell0 = row.getCell(0);
-                    XWPFParagraph paragraph=cell0.getXWPFDocument().createParagraph();
+                    XWPFTableCell cell = row.getCell(0);
+                    XWPFParagraph paragraph=cell.getXWPFDocument().createParagraph();
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
+                    XWPFRun runa=paragraph.createRun();
+
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(0).getCell(0).setText("Description");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText("Amount");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(0).getCell(0).setColor("78C200");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(0).getCell(1).setColor("78C200");
+                    runa.getDocument().getTable(table.getCTTbl()).createRow().getCell(0).setText("item 1");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(1).getCell(1).setText("44");
+                    runa.getDocument().getTable(table.getCTTbl()).createRow().getCell(0).setText("item 2");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(2).getCell(1).setText("5");
+                    runa.getDocument().getTable(table.getCTTbl()).createRow().getCell(0).setText("item 3");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(3).getCell(1).setText("57");
+                    runa.getDocument().getTable(table.getCTTbl()).createRow().getCell(0).setText("item 4");
+                    runa.getDocument().getTable(table.getCTTbl()).getRow(4).getCell(1).setText("54");
+                    runa.getDocument().getTable(table.getCTTbl()).setTableAlignment(TableRowAlign.CENTER);
+                    runa.addBreak();
+
+
+                    XWPFTable table0 = xwpfDocument.createTable();
+                    XWPFTableRow row0 = table0.getRow(0);
+                    XWPFTableCell cell0 = row0.getCell(0);
                     cell0.setText("Description");
                     cell0.setColor("78C200");
-                    cell0.getTableRow().createCell();
-                    cell0.getTableRow().getCell(1).setText("Amount");
-                    cell0.getTableRow().getCell(1).setColor("78C200");
-                    XWPFTableRow row2 = table.createRow();
+                    row0.createCell().setText("Amount");
+                    row0.getCell(1).setColor("78C200");
+                    XWPFTableRow row2 = table0.createRow();
                     XWPFTableCell cell1 = row2.getCell(0);
-                    cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                    XWPFParagraph paragraph1=cell1.getXWPFDocument().createParagraph();
+                    paragraph1.setAlignment(ParagraphAlignment.CENTER);
                     cell1.setText("item 1");
-                    cell1.getTableRow().getCell(1).setText("5");
-                    xwpfRun.addBreak();
+                    row2.getCell(1).setText("12");
+
+                    XWPFTableRow row3= table0.createRow();
+                    XWPFTableCell cell2 = row3.getCell(0);
+                    XWPFParagraph paragraph2=cell1.getXWPFDocument().createParagraph();
+                    paragraph2.setAlignment(ParagraphAlignment.CENTER);
+                    cell2.setText("item 2");
+                    row2.createCell().setText("55");
+
+
                     XWPFParagraph paragraph0 = xwpfRun.getDocument().createParagraph();
                     XWPFRun run2 = paragraph0.createRun();
                     run2.addBreak();
@@ -201,31 +230,31 @@ public class XWPFWbk extends AppCompatActivity {
                     run2.setText("Desde un XWPFParagraph, es posible obtener los elementos XWPFRun existentes que componen el texto. Para agregar nuevo texto, el método createRun() agregará un nuevo XWPFRun al final de la lista. insertNewRun(int) puede ser se utiliza para agregar un nuevo XWPFRun en un punto específico de la párrafo.Una vez que tenga un XWPFRun, puede usar el método setText(String) para realizar cambios en el texto. Para agregar elementos de espacio en blanco como tabulaciones y saltos de línea, es necesario utilizar métodos como addTab() y addCarriageReturn().El texto del documento también se encuentra en la corriente principal. Su inicio location se da como FIB.fcMin y su longitud viene dada en bytes por FIB.ccpText. Estos dos valores no son muy útiles para obtener el texto Debido a Unicode. Puede haber texto Unicode entremezclado con ASCII Mensaje de texto. Eso nos lleva a la mesa de piezas." +
                             "\n" +
                             "La tabla de piezas se utiliza para dividir el texto en no unicode y unicode pedazos. El tamaño y el desplazamiento se indican en FIB.fcClx y FIB.lcbClx respectivamente. La tabla de piezas puede contener modificadores de propiedad (prm). Estos son para archivos complejos (guardados rápidamente) y se omiten. Cada pieza de texto Contiene desplazamientos en la secuencia principal que contienen texto para esa pieza. Si la pieza utiliza unicode, el desplazamiento del archivo se enmascara con un bit determinado. Luego tienes que desenmascarar el bit y dividir por 2 para obtener el archivo real compensar.");
-                    paragraph.setPageBreak(true);
-                    XWPFRun run3 = paragraph.createRun();
+                    paragraph0.setPageBreak(true);
+                    XWPFRun run3 = paragraph0.createRun();
                     run3.addBreak();
                     run3.setText("Los estilos de párrafo sin comprimir se representan mediante el Pargraph Estructura de datos de propiedades (PAP). Los estilos de carácter sin comprimir son representado por la estructura de datos Propiedades de caracteres (CHP). Los estilos para el texto del documento se almacenan en formato comprimido en el directorio correspondientes Páginas de disco formateadas (FKP). Se refiere un PAP comprimido a como PAPX y un CHP comprimido es un CHPX. Las ubicaciones de FKP son Almacenado en la tabla de contenedores. Hay mesas de contenedores separadas para CHPX y PAPAX. Las ubicaciones y tamaños de las mesas de contenedores se almacenan en el FIB.");
                     run3.setFontSize(12);
                     run3.setFontFamily("Book Antiqua");
-                    paragraph.setIndentationFirstLine(1);
-                    paragraph.setAlignment(ParagraphAlignment.CENTER);
-                    paragraph.setSpacingAfterLines(1);
-                    paragraph.setBorderBottom(Borders.DOTTED);
-                    paragraph.setBorderTop(Borders.DOTTED);
-                    paragraph.setBorderLeft(Borders.ARCHED_SCALLOPS);
-                    paragraph.setBorderRight(Borders.ARCHED_SCALLOPS);
+                    paragraph0.setIndentationFirstLine(1);
+                    paragraph0.setAlignment(ParagraphAlignment.CENTER);
+                    paragraph0.setSpacingAfterLines(1);
+                    paragraph0.setBorderBottom(Borders.DOTTED);
+                    paragraph0.setBorderTop(Borders.DOTTED);
+                    paragraph0.setBorderLeft(Borders.ARCHED_SCALLOPS);
+                    paragraph0.setBorderRight(Borders.ARCHED_SCALLOPS);
                     run3.addBreak(BreakType.PAGE);
-                    XWPFRun run4 = paragraph.createRun();
-                    XWPFParagraph paragraph1 = run4.getDocument().createParagraph();
-                    paragraph1.setIndentationFirstLine(1);
-                    paragraph1.setAlignment(ParagraphAlignment.CENTER);
-                    paragraph1.setSpacingAfterLines(1);
-                    paragraph1.setBorderBottom(Borders.BASIC_BLACK_SQUARES);
-                    paragraph1.setBorderTop(Borders.BASIC_BLACK_SQUARES);
-                    paragraph1.setBorderLeft(Borders.BASIC_BLACK_SQUARES);
-                    paragraph1.setBorderRight(Borders.BASIC_BLACK_SQUARES);
-                    XWPFParagraph paragraph2=run4.getDocument().createParagraph();
-                    paragraph2.createRun().setText("Bar Chart");
+                    XWPFRun run4 = paragraph0.createRun();
+                    XWPFParagraph paragraph3 = run4.getDocument().createParagraph();
+                    paragraph3.setIndentationFirstLine(1);
+                    paragraph3.setAlignment(ParagraphAlignment.CENTER);
+                    paragraph3.setSpacingAfterLines(1);
+                    paragraph3.setBorderBottom(Borders.BASIC_BLACK_SQUARES);
+                    paragraph3.setBorderTop(Borders.BASIC_BLACK_SQUARES);
+                    paragraph3.setBorderLeft(Borders.BASIC_BLACK_SQUARES);
+                    paragraph3.setBorderRight(Borders.BASIC_BLACK_SQUARES);
+                    XWPFParagraph paragraph4=run4.getDocument().createParagraph();
+                    paragraph4.createRun().setText("Bar Chart");
 //---------------------------------------------------------------------------------------------------
                     String chartTitle = "10 languages with most speakers as first language";  // first line is chart title
                     String seriesText = "Speakers,Language";
@@ -291,8 +320,8 @@ public class XWPFWbk extends AppCompatActivity {
                     chart.setTitleOverlay(false);
                     chart.setAutoTitleDeleted(false);
 //-----------------------------------------Line CHART-----------------------------------------------------------------------------------------------------
-                    XWPFParagraph paragraph3=run4.getDocument().createParagraph();
-                    paragraph3.createRun().setText("Line Graph");
+                    XWPFParagraph paragraph5=run4.getDocument().createParagraph();
+                    paragraph5.createRun().setText("Line Graph");
                     String linechartTitle = "languages with most speakers as first language";  // first line is chart title
                     String seriesText2 = "Speakers,Language";
                     String[] seriesline = seriesText2.split(",");
@@ -365,59 +394,11 @@ public class XWPFWbk extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error 2:File does not contain any data.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
         }
     }
 
-        private void exportdoc2 () throws IOException, InvalidFormatException {
-            try {
-                try {
-                    File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
-                    if (!exportDir.exists()) {
-                        exportDir.mkdirs();
-                    }
-                    try {
-                        File file = new File(exportDir, "xwpf_example.docx");
-                        file.createNewFile();
-                        try {
 
-                            XWPFDocument xwpfDocument = new XWPFDocument();
-                            XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
-                            XWPFRun run3 = xwpfParagraph.createRun();
-                            XWPFChart chart2 = run3.getDocument().createChart(XDDFChart.DEFAULT_WIDTH * 5, XDDFChart.DEFAULT_HEIGHT * 7);
-                            XDDFChartAxis xaxisline = chart2.createCategoryAxis(AxisPosition.BOTTOM);
-                            xaxisline.setTitle("Title");
-                            XDDFValueAxis yvalueAxisline = chart2.createValueAxis(AxisPosition.LEFT);
-                            xaxisline.setTitle("Amount");
-                            yvalueAxisline.setCrosses(AxisCrosses.MAX);
-                            XDDFPieChartData pie = (XDDFPieChartData) chart2.createData(ChartTypes.PIE, xaxisline, yvalueAxisline);
-                            /*XDDFChartData.Series lseries1 = (XDDFChartData.Series) pie.addSeries(categoriesLData, lvaluesData);
-                            lseries1.setTitle(seriesline[0], chart2.setSheetTitle(seriesline[0], COLUMN_COUNTRIES));
-                            pie.setVaryColors(true);
-                            pie.setFirstSliceAngle(90);*/
-
-                            chart2.plot(pie);
-
-
-                            OutputStream fileOut = new FileOutputStream(file);
-                            xwpfDocument.write(fileOut);
-                            fileOut.close();
-                            Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            e.getCause();
-                            Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 private void exportsqldoc (){
     try {
         try {
@@ -429,7 +410,7 @@ private void exportsqldoc (){
                 exportDir.mkdirs();
             }
             try {
-                File file = new File(exportDir, "xwpf_example.docx");
+                File file = new File(exportDir, "xwpf_example_hssfsql.docx");
                 file.createNewFile();
                 try {
                     XWPFDocument xwpfDocument = new XWPFDocument();
@@ -437,10 +418,15 @@ private void exportsqldoc (){
                     XWPFRun run3 = xwpfParagraph.createRun();
                     SQLiteDatabase db = helper.getWriteableDatabase();
                     Cursor cur = helper.exportAll();
-                    XWPFTable table = xwpfDocument.createTable();
+                    //XWPFTable table = xwpfDocument.createTable();
                     data = new ArrayList<>();
                     db = helper.getReadableDatabase();
-                    XWPFTableRow row = table.getRow(0);
+                    /*XWPFTableRow row = table.getRow(0);
+                    XWPFTableCell cell=row.getCell(0);*/
+                    XWPFParagraph xwpfParagraph1 = xwpfDocument.createParagraph();
+
+                    XWPFTable table=run3.getDocument().createTable();
+                    XWPFTableRow row=table.getRow(0);
                     XWPFTableCell cell=row.getCell(0);
                     cur = db.rawQuery("select * from " + TABLE1, null);
                     while (cur.moveToNext()) {
@@ -466,9 +452,7 @@ private void exportsqldoc (){
                             }
                         }
                     }
-                    table.getRow(0).setHeight(10);
-                    table.getRow(0).setHeightRule(TableRowHeightRule.AUTO);
-                    cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
                     XWPFTableCell cell1=row.createCell();
                     cell1.setText(cur.getColumnName(0));
                     cell1.setWidthType(TableWidthType.AUTO);
@@ -514,7 +498,107 @@ private void exportsqldoc (){
         e.printStackTrace();
     }
 
-}
+} private void exportdocsqltbl2 () throws IOException, InvalidFormatException {
+        try {
+            try {
+                File dbFile = getDatabasePath(DATABASE_NAME);
+                helper = new DB_Helper(getApplicationContext(), "POI.db", null, 1);
+                System.out.println(dbFile);
+                File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
+                if (!exportDir.exists()) {
+                    exportDir.mkdirs();
+                }
+                try {
+                    File file = new File(exportDir, "xwpf_example_hssfsql.docx");
+                    file.createNewFile();
+                    try {
+                        XWPFDocument xwpfDocument = new XWPFDocument();
+                        XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
+                        XWPFRun run3 = xwpfParagraph.createRun();
+                        SQLiteDatabase db = helper.getWriteableDatabase();
+                        Cursor cur = helper.exportAll();
+                        XWPFTable table = xwpfDocument.createTable();
+                        data = new ArrayList<>();
+                        db = helper.getReadableDatabase();
+                        XWPFTableRow row = table.getRow(0);
+                        XWPFTableCell cell0 = row.getCell(0);
+                        XWPFParagraph paragraph0=cell0.getXWPFDocument().createParagraph();
+                        paragraph0.setAlignment(ParagraphAlignment.CENTER);
+                        XWPFRun runa=paragraph0.createRun();
+                        runa.setFontFamily("Times New Roman");
+                        runa.setBold(true);
+                        cur = db.rawQuery("select * from " + TABLE1, null);
+                        while (cur.moveToNext()) {
+                            String arrStr[] = {
+                                    String.valueOf(cur.getString(0)),
+                                    String.valueOf(cur.getString(1)),
+                                    String.valueOf(cur.getString(2)),
+                                    String.valueOf(cur.getString(3)),
+                                    String.valueOf(cur.getString(4)),
+                                    String.valueOf(cur.getString(5)),
+                                    String.valueOf(cur.getString(6))};
+                            for (int j = 0; j < arrStr.length; j++) {
+                                while (cur.moveToPosition(j++)) {
+                                    XWPFTableCell cell = row.getCell(0);
+                                    XWPFParagraph paragraph=cell.getXWPFDocument().createParagraph();
+                                    XWPFTableRow row0 = table.createRow();
+                                    XWPFRun runb=paragraph.createRun();
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(0));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(1));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(2));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(3));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(4));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(5));
+                                    runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(6));
+                                }
+                            }
+                        }
+
+                        XWPFTableCell cell1 = row.createCell();
+                        cell1.setText(cur.getColumnName(0));
+                        cell1.setWidthType(TableWidthType.AUTO);
+                        cell1.setColor("D44012");
+                        XWPFTableCell cell2 = row.createCell();
+                        cell2.setText(cur.getColumnName(1));
+                        cell2.setColor("D44012");
+                        XWPFTableCell cell3 = row.createCell();
+                        cell3.setText(cur.getColumnName(2));
+                        cell3.setColor("D44012");
+                        XWPFTableCell cell4 = row.createCell();
+                        cell4.setText(cur.getColumnName(3));
+                        cell4.setColor("D44012");
+                        XWPFTableCell cell5 = row.createCell();
+                        cell5.setText(cur.getColumnName(4));
+                        cell5.setColor("D44012");
+                        XWPFTableCell cell6 = row.createCell();
+                        cell6.setText(cur.getColumnName(5));
+                        cell6.setColor("D44012");
+                        XWPFTableCell cell7 = row.createCell();
+                        cell7.setText(cur.getColumnName(6));
+                        cell7.setColor("D44012");
+
+
+                        cur.close();
+
+                        OutputStream fileOut = new FileOutputStream(file);
+                        xwpfDocument.write(fileOut);
+                        fileOut.close();
+                        Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.getCause();
+                        Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
                     /*XDDFChart chart = run3.getDocument().createChart();
                     XDDFCategoryAxis categoryAxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
