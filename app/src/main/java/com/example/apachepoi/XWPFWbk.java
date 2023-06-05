@@ -20,16 +20,22 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.apache.poi.hslf.model.HeadersFooters;
 
+import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.model.FormattedDiskPage;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
+import org.apache.poi.hwpf.usermodel.Table;
 import org.apache.poi.hwpf.usermodel.TableCell;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.TableStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.wp.usermodel.HeaderFooterType;
 import org.apache.poi.xddf.usermodel.XDDFFillProperties;
@@ -57,6 +63,8 @@ import org.apache.poi.xddf.usermodel.chart.XDDFPieChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFSeriesAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xddf.usermodel.text.XDDFTextBody;
+import org.apache.poi.xssf.usermodel.XSSFTable;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.Borders;
@@ -152,7 +160,7 @@ public class XWPFWbk extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    exportdocsqltbl2();
+                    exportdoc();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -171,6 +179,7 @@ public class XWPFWbk extends AppCompatActivity {
                 File file = new File(exportDir, "xwpf_example.docx");
                 file.createNewFile();
                 try {
+
                     XWPFDocument xwpfDocument = new XWPFDocument();
                     XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                     XWPFRun xwpfRun = xwpfParagraph.createRun();
@@ -178,12 +187,14 @@ public class XWPFWbk extends AppCompatActivity {
                     xwpfRun.setFontFamily("Arial");
                     xwpfRun.addBreak();
 //----------------------------------------------TABLE----------------------------------------------------------
+
                     XWPFTable table = xwpfDocument.createTable();
                     XWPFTableRow row = table.getRow(0);
                     XWPFTableCell cell = row.getCell(0);
                     XWPFParagraph paragraph=cell.getXWPFDocument().createParagraph();
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
                     XWPFRun runa=paragraph.createRun();
+                    
 
                     runa.getDocument().getTable(table.getCTTbl()).getRow(0).getCell(0).setText("Description");
                     runa.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText("Amount");
