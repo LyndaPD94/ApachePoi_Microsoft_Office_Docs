@@ -66,11 +66,8 @@ public class HslfSlsh extends AppCompatActivity {
                     slide1.getBackground().getSheet().getBackground();
                     HSLFSheet sheet=slide1.getMasterSheet();
                     sheet.getMasterSheet();
-
                     slide1.getPlaceholder(Placeholder.CENTERED_TITLE);
                     new HSLFTextRun(null);
-
-
                     FileOutputStream fileOut = new FileOutputStream(file);
                     slideShow.write(fileOut);
                     fileOut.close();

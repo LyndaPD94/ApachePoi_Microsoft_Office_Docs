@@ -29,7 +29,6 @@ public class DB_Helper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES1);
         db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES4);
-
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -38,12 +37,9 @@ public class DB_Helper extends SQLiteOpenHelper {
         //db.execSQL(Structure_BBDD.SQL_DELETE_ENTRIES1);
         onCreate(db);
     }
-
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-
-
 
     public SQLiteDatabase getWriteableDatabase(SQLiteDatabase db, String s) {
         db.execSQL("select * from " + TABLE1);
