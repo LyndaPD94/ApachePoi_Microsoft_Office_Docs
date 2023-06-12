@@ -27,8 +27,6 @@ public class DB_Helper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        DB_Helper helper = null;
-        db = helper.getWritableDatabase();
         db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES1);
         db.execSQL(Structure_BBDD.SQL_CREATE_ENTRIES4);
 
@@ -45,13 +43,7 @@ public class DB_Helper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public SQLiteDatabase getReadableDatabase(SQLiteDatabase db, String s) {
-        db.execSQL("select * from " + TABLE1);
-        db.execSQL("select * from " + TABLE2);
 
-        s.getBytes(StandardCharsets.UTF_8).toString();
-        return null;
-    }
 
     public SQLiteDatabase getWriteableDatabase(SQLiteDatabase db, String s) {
         db.execSQL("select * from " + TABLE1);
@@ -63,26 +55,14 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     public Cursor getSTotal() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur5 = db.rawQuery("SELECT Description, Total FROM " + TABLE1, null);
-        return cur5;
+        return db.rawQuery("SELECT Description, Total FROM " + TABLE1, null);
     }
 
     public Cursor exportAll() {
         ArrayList<Materials> data = null;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur = db.rawQuery("SELECT * FROM " + TABLE1, null);
 
-        return cur;
-
-    }
-
-
-    public Cursor exportAll4() {
-        ArrayList<Sales> data = null;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur4 = db.rawQuery("SELECT * FROM " + TABLE1, null);
-
-        return cur4;
+        return db.rawQuery("SELECT * FROM " + TABLE1, null);
 
     }
 

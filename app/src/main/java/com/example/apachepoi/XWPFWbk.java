@@ -5,44 +5,16 @@ import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.ColorSpace;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.tabs.TabLayout;
-
-import org.apache.poi.hslf.model.HeadersFooters;
-
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.model.FormattedDiskPage;
-import org.apache.poi.hwpf.usermodel.HeaderStories;
-import org.apache.poi.hwpf.usermodel.Table;
-import org.apache.poi.hwpf.usermodel.TableCell;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.formula.functions.Value;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Color;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.RichTextString;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.TableStyle;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.wp.usermodel.HeaderFooterType;
-import org.apache.poi.xddf.usermodel.XDDFFillProperties;
-import org.apache.poi.xddf.usermodel.XDDFShapeProperties;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
 import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
-import org.apache.poi.xddf.usermodel.chart.AxisLabelAlignment;
 import org.apache.poi.xddf.usermodel.chart.AxisPosition;
 import org.apache.poi.xddf.usermodel.chart.AxisTickMark;
 import org.apache.poi.xddf.usermodel.chart.BarDirection;
@@ -50,88 +22,40 @@ import org.apache.poi.xddf.usermodel.chart.BarGrouping;
 import org.apache.poi.xddf.usermodel.chart.ChartTypes;
 import org.apache.poi.xddf.usermodel.chart.LegendPosition;
 import org.apache.poi.xddf.usermodel.chart.XDDFBarChartData;
-import org.apache.poi.xddf.usermodel.chart.XDDFCategoryAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFChart;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartLegend;
 import org.apache.poi.xddf.usermodel.chart.XDDFDataSource;
 import org.apache.poi.xddf.usermodel.chart.XDDFDataSourcesFactory;
-import org.apache.poi.xddf.usermodel.chart.XDDFLegendEntry;
 import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
-import org.apache.poi.xddf.usermodel.chart.XDDFPieChartData;
-import org.apache.poi.xddf.usermodel.chart.XDDFSeriesAxis;
 import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
-import org.apache.poi.xddf.usermodel.text.XDDFTextBody;
-import org.apache.poi.xssf.usermodel.XSSFTable;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
-import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.BreakType;
-import org.apache.poi.xwpf.usermodel.IBody;
-import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.TableRowAlign;
-import org.apache.poi.xwpf.usermodel.TableRowHeightRule;
 import org.apache.poi.xwpf.usermodel.TableWidthType;
-import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.poi.xwpf.usermodel.XWPFChart;
-import org.apache.poi.xwpf.usermodel.XWPFComment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFFooter;
-import org.apache.poi.xwpf.usermodel.XWPFFootnote;
-import org.apache.poi.xwpf.usermodel.XWPFFootnotes;
-import org.apache.poi.xwpf.usermodel.XWPFHeader;
-import org.apache.poi.xwpf.usermodel.XWPFHeaderFooter;
-import org.apache.poi.xwpf.usermodel.XWPFNum;
-import org.apache.poi.xwpf.usermodel.XWPFNumbering;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFStyle;
-import org.apache.poi.xwpf.usermodel.XWPFStyles;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.apache.xmlbeans.XmlObject;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
-import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFootnotes;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFtnEdn;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHdrFtr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNum;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHdrFtr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.impl.CTStyleImpl;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class XWPFWbk extends AppCompatActivity {
-    Button btnexpdocx,exprtsqldoc;
+    Button btnexpdocx, exprtsqldoc;
     EditText docxtv;
     DB_Helper helper;
-    ArrayList<Sales>data;
-    public XDDFDataSource<String> xddfDataSource;
-    public XDDFNumericalDataSource<Number> xddfNumericalDataSource;
-    List<XDDFChartData> xddfChartData;
-    List<InputData> inputData;
+    ArrayList<Sales> data;
+
 
     private static final int COLUMN_LANGUAGES = 0;
     private static final int COLUMN_COUNTRIES = 1;
@@ -144,31 +68,25 @@ public class XWPFWbk extends AppCompatActivity {
 
         setContentView(R.layout.activity_xwpfwbk);
         btnexpdocx = (Button) findViewById(R.id.exprtdocx);
-        exprtsqldoc=(Button) findViewById(R.id.expsqldoc);
+        exprtsqldoc = (Button) findViewById(R.id.expsqldoc);
         docxtv = (EditText) findViewById(R.id.doocxtv);
-        exprtsqldoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    exportsqldoc();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        exprtsqldoc.setOnClickListener(v -> {
+            try {
+                exportsqldoc();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        btnexpdocx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    exportdoc();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnexpdocx.setOnClickListener(v -> {
+            try {
+                exportdoc();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    private void exportdoc() throws IOException, FileNotFoundException, NoSuchFileException {
+    private void exportdoc() {
 
         try {
             File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
@@ -177,7 +95,6 @@ public class XWPFWbk extends AppCompatActivity {
             }
             try {
                 File file = new File(exportDir, "xwpf_example.docx");
-                file.createNewFile();
                 try {
 
                     XWPFDocument xwpfDocument = new XWPFDocument();
@@ -191,10 +108,10 @@ public class XWPFWbk extends AppCompatActivity {
                     XWPFTable table = xwpfDocument.createTable();
                     XWPFTableRow row = table.getRow(0);
                     XWPFTableCell cell = row.getCell(0);
-                    XWPFParagraph paragraph=cell.getXWPFDocument().createParagraph();
+                    XWPFParagraph paragraph = cell.getXWPFDocument().createParagraph();
                     paragraph.setAlignment(ParagraphAlignment.CENTER);
-                    XWPFRun runa=paragraph.createRun();
-                    
+                    XWPFRun runa = paragraph.createRun();
+
 
                     runa.getDocument().getTable(table.getCTTbl()).getRow(0).getCell(0).setText("Description");
                     runa.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText("Amount");
@@ -221,14 +138,14 @@ public class XWPFWbk extends AppCompatActivity {
                     row0.getCell(1).setColor("78C200");
                     XWPFTableRow row2 = table0.createRow();
                     XWPFTableCell cell1 = row2.getCell(0);
-                    XWPFParagraph paragraph1=cell1.getXWPFDocument().createParagraph();
+                    XWPFParagraph paragraph1 = cell1.getXWPFDocument().createParagraph();
                     paragraph1.setAlignment(ParagraphAlignment.CENTER);
                     cell1.setText("item 1");
                     row2.getCell(1).setText("12");
 
-                    XWPFTableRow row3= table0.createRow();
+                    XWPFTableRow row3 = table0.createRow();
                     XWPFTableCell cell2 = row3.getCell(0);
-                    XWPFParagraph paragraph2=cell1.getXWPFDocument().createParagraph();
+                    XWPFParagraph paragraph2 = cell1.getXWPFDocument().createParagraph();
                     paragraph2.setAlignment(ParagraphAlignment.CENTER);
                     cell2.setText("item 2");
                     row2.createCell().setText("55");
@@ -264,7 +181,7 @@ public class XWPFWbk extends AppCompatActivity {
                     paragraph3.setBorderTop(Borders.BASIC_BLACK_SQUARES);
                     paragraph3.setBorderLeft(Borders.BASIC_BLACK_SQUARES);
                     paragraph3.setBorderRight(Borders.BASIC_BLACK_SQUARES);
-                    XWPFParagraph paragraph4=run4.getDocument().createParagraph();
+                    XWPFParagraph paragraph4 = run4.getDocument().createParagraph();
                     paragraph4.createRun().setText("Bar Chart");
 //---------------------------------------------------------------------------------------------------
                     String chartTitle = "10 languages with most speakers as first language";  // first line is chart title
@@ -272,12 +189,8 @@ public class XWPFWbk extends AppCompatActivity {
                     String[] series = seriesText.split(",");
                     // Category Axis Data"seriesText)
                     List<String> listLanguages = new ArrayList<>(5);
-                    // Values
                     List<Double> listCountries = new ArrayList<>(5);
                     List<Double> listSpeakers = new ArrayList<>(5);
-                    // set model
-                    String ln = null;
-                    //String[] vals = ln.split(",");
                     listCountries.add(58d);
                     listCountries.add(4d);
                     listCountries.add(28d);
@@ -331,9 +244,8 @@ public class XWPFWbk extends AppCompatActivity {
                     chart.setTitleOverlay(false);
                     chart.setAutoTitleDeleted(false);
 //-----------------------------------------Line CHART-----------------------------------------------------------------------------------------------------
-                    XWPFParagraph paragraph5=run4.getDocument().createParagraph();
+                    XWPFParagraph paragraph5 = run4.getDocument().createParagraph();
                     paragraph5.createRun().setText("Line Graph");
-                    String linechartTitle = "languages with most speakers as first language";  // first line is chart title
                     String seriesText2 = "Speakers,Language";
                     String[] seriesline = seriesText2.split(",");
 
@@ -368,7 +280,7 @@ public class XWPFWbk extends AppCompatActivity {
                     XDDFChartAxis xaxisline = chart2.createCategoryAxis(AxisPosition.BOTTOM);
                     xaxisline.setTitle(seriesline[0]);
                     XDDFValueAxis yvalueAxisline = chart2.createValueAxis(AxisPosition.LEFT);
-                    xaxisline.setTitle(seriesline[0]+","+seriesline[1]);
+                    xaxisline.setTitle(seriesline[0] + "," + seriesline[1]);
                     yvalueAxisline.setCrosses(AxisCrosses.AUTO_ZERO);
                     yvalueAxisline.setMajorTickMark(AxisTickMark.OUT);
                     yvalueAxisline.setCrossBetween(AxisCrossBetween.BETWEEN);
@@ -410,106 +322,7 @@ public class XWPFWbk extends AppCompatActivity {
     }
 
 
-private void exportsqldoc (){
-    try {
-        try {
-            File dbFile = getDatabasePath(DATABASE_NAME);
-            helper = new DB_Helper(getApplicationContext(), "POI.db", null, 1);
-            System.out.println(dbFile);
-            File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
-            if (!exportDir.exists()) {
-                exportDir.mkdirs();
-            }
-            try {
-                File file = new File(exportDir, "xwpf_example_hssfsql.docx");
-                file.createNewFile();
-                try {
-                    XWPFDocument xwpfDocument = new XWPFDocument();
-                    XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
-                    XWPFRun run3 = xwpfParagraph.createRun();
-                    SQLiteDatabase db = helper.getWriteableDatabase();
-                    Cursor cur = helper.exportAll();
-                    //XWPFTable table = xwpfDocument.createTable();
-                    data = new ArrayList<>();
-                    db = helper.getReadableDatabase();
-                    /*XWPFTableRow row = table.getRow(0);
-                    XWPFTableCell cell=row.getCell(0);*/
-                    XWPFParagraph xwpfParagraph1 = xwpfDocument.createParagraph();
-
-                    XWPFTable table=run3.getDocument().createTable();
-                    XWPFTableRow row=table.getRow(0);
-                    XWPFTableCell cell=row.getCell(0);
-                    cur = db.rawQuery("select * from " + TABLE1, null);
-                    while (cur.moveToNext()) {
-                        String arrStr[] = {
-                                String.valueOf(cur.getString(0)),
-                                String.valueOf(cur.getString(1)),
-                                String.valueOf(cur.getString(2)),
-                                String.valueOf(cur.getString(3)),
-                                String.valueOf(cur.getString(4)),
-                                String.valueOf(cur.getString(5)),
-                                String.valueOf(cur.getString(6))};
-                        for (int j = 0; j < arrStr.length; j++) {
-                            while (cur.moveToPosition(j++)) {
-                                XWPFTableRow row0 = table.createRow();
-                                row0.createCell().setText(cur.getString(0));
-                                row0.createCell().setText(cur.getString(1));
-                                row0.createCell().setText(cur.getString(2));
-                                row0.createCell().setText(cur.getString(3));
-                                row0.createCell().setText(cur.getString(4));
-                                row0.createCell().setText(cur.getString(5));
-                                row0.createCell().setText(cur.getString(6));
-                                row0.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
-                            }
-                        }
-                    }
-
-                    XWPFTableCell cell1=row.createCell();
-                    cell1.setText(cur.getColumnName(0));
-                    cell1.setWidthType(TableWidthType.AUTO);
-                    cell1.setColor("D44012");
-                    XWPFTableCell cell2=row.createCell();
-                    cell2.setText(cur.getColumnName(1));
-                    cell2.setColor("D44012");
-                    XWPFTableCell cell3=row.createCell();
-                    cell3.setText(cur.getColumnName(2));
-                    cell3.setColor("D44012");
-                    XWPFTableCell cell4=row.createCell();
-                    cell4.setText(cur.getColumnName(3));
-                    cell4.setColor("D44012");
-                    XWPFTableCell cell5=row.createCell();
-                    cell5.setText(cur.getColumnName(4));
-                    cell5.setColor("D44012");
-                    XWPFTableCell cell6=row.createCell();
-                    cell6.setText(cur.getColumnName(5));
-                    cell6.setColor("D44012");
-                    XWPFTableCell cell7=row.createCell();
-                    cell7.setText(cur.getColumnName(6));
-                    cell7.setColor("D44012");
-
-
-                    cur.close();
-
-                    OutputStream fileOut = new FileOutputStream(file);
-                    xwpfDocument.write(fileOut);
-                    fileOut.close();
-                    Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.getCause();
-                    Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-} private void exportdocsqltbl2 () throws IOException, InvalidFormatException {
+    private void exportsqldoc() {
         try {
             try {
                 File dbFile = getDatabasePath(DATABASE_NAME);
@@ -521,13 +334,111 @@ private void exportsqldoc (){
                 }
                 try {
                     File file = new File(exportDir, "xwpf_example_hssfsql.docx");
-                    file.createNewFile();
                     try {
                         XWPFDocument xwpfDocument = new XWPFDocument();
                         XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                         XWPFRun run3 = xwpfParagraph.createRun();
-                        SQLiteDatabase db = helper.getWriteableDatabase();
-                        Cursor cur = helper.exportAll();
+                        helper.getWriteableDatabase();
+                        SQLiteDatabase db;
+                        helper.exportAll();
+                        Cursor cur;
+                        data = new ArrayList<>();
+                        db = helper.getReadableDatabase();
+                        xwpfDocument.createParagraph();
+
+                        XWPFTable table = run3.getDocument().createTable();
+                        XWPFTableRow row = table.getRow(0);
+                        row.getCell(0);
+                        cur = db.rawQuery("select * from " + TABLE1, null);
+                        while (cur.moveToNext()) {
+                            String[] arrStr = {
+                                    String.valueOf(cur.getString(0)),
+                                    String.valueOf(cur.getString(1)),
+                                    String.valueOf(cur.getString(2)),
+                                    String.valueOf(cur.getString(3)),
+                                    String.valueOf(cur.getString(4)),
+                                    String.valueOf(cur.getString(5)),
+                                    String.valueOf(cur.getString(6))};
+                            for (int j = 0; j < arrStr.length; j++) {
+                                while (cur.moveToPosition(j++)) {
+                                    XWPFTableRow row0 = table.createRow();
+                                    row0.createCell().setText(cur.getString(0));
+                                    row0.createCell().setText(cur.getString(1));
+                                    row0.createCell().setText(cur.getString(2));
+                                    row0.createCell().setText(cur.getString(3));
+                                    row0.createCell().setText(cur.getString(4));
+                                    row0.createCell().setText(cur.getString(5));
+                                    row0.createCell().setText(cur.getString(6));
+                                    row0.getCell(0).setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+                                }
+                            }
+                        }
+
+                        XWPFTableCell cell1 = row.createCell();
+                        cell1.setText(cur.getColumnName(0));
+                        cell1.setWidthType(TableWidthType.AUTO);
+                        cell1.setColor("D44012");
+                        XWPFTableCell cell2 = row.createCell();
+                        cell2.setText(cur.getColumnName(1));
+                        cell2.setColor("D44012");
+                        XWPFTableCell cell3 = row.createCell();
+                        cell3.setText(cur.getColumnName(2));
+                        cell3.setColor("D44012");
+                        XWPFTableCell cell4 = row.createCell();
+                        cell4.setText(cur.getColumnName(3));
+                        cell4.setColor("D44012");
+                        XWPFTableCell cell5 = row.createCell();
+                        cell5.setText(cur.getColumnName(4));
+                        cell5.setColor("D44012");
+                        XWPFTableCell cell6 = row.createCell();
+                        cell6.setText(cur.getColumnName(5));
+                        cell6.setColor("D44012");
+                        XWPFTableCell cell7 = row.createCell();
+                        cell7.setText(cur.getColumnName(6));
+                        cell7.setColor("D44012");
+
+
+                        cur.close();
+
+                        OutputStream fileOut = new FileOutputStream(file);
+                        xwpfDocument.write(fileOut);
+                        fileOut.close();
+                        Toast.makeText(getApplicationContext(), "Exported", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.getCause();
+                        Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error 3:File does not contain any data.", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }/* private void exportdocsqltbl2 () {
+        try {
+            try {
+                File dbFile = getDatabasePath(DATABASE_NAME);
+                helper = new DB_Helper(getApplicationContext(), "POI.db", null, 1);
+                System.out.println(dbFile);
+                File exportDir = new File(Environment.getExternalStorageDirectory() + "/Documents");
+                if (!exportDir.exists()) {
+                    exportDir.mkdirs();
+                }
+                try {
+                    File file = new File(exportDir, "xwpf_example_hssfsql.docx");
+                    try {
+                        XWPFDocument xwpfDocument = new XWPFDocument();
+                        XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
+                        xwpfParagraph.createRun();
+                        helper.getWriteableDatabase();
+                        SQLiteDatabase db;
+                        helper.exportAll();
+                        Cursor cur;
                         XWPFTable table = xwpfDocument.createTable();
                         data = new ArrayList<>();
                         db = helper.getReadableDatabase();
@@ -540,7 +451,7 @@ private void exportsqldoc (){
                         runa.setBold(true);
                         cur = db.rawQuery("select * from " + TABLE1, null);
                         while (cur.moveToNext()) {
-                            String arrStr[] = {
+                            String[] arrStr = {
                                     String.valueOf(cur.getString(0)),
                                     String.valueOf(cur.getString(1)),
                                     String.valueOf(cur.getString(2)),
@@ -552,7 +463,7 @@ private void exportsqldoc (){
                                 while (cur.moveToPosition(j++)) {
                                     XWPFTableCell cell = row.getCell(0);
                                     XWPFParagraph paragraph=cell.getXWPFDocument().createParagraph();
-                                    XWPFTableRow row0 = table.createRow();
+                                    table.createRow();
                                     XWPFRun runb=paragraph.createRun();
                                     runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(0));
                                     runb.getDocument().getTable(table.getCTTbl()).getRow(0).createCell().setText(cur.getString(1));
@@ -599,7 +510,7 @@ private void exportsqldoc (){
                         e.getCause();
                         Toast.makeText(getApplicationContext(), "Error 1", Toast.LENGTH_LONG).show();
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Error 2", Toast.LENGTH_LONG).show();
                 }
@@ -611,7 +522,7 @@ private void exportsqldoc (){
         }
     }
 }
-                    /*XDDFChart chart = run3.getDocument().createChart();
+                    XDDFChart chart = run3.getDocument().createChart();
                     XDDFCategoryAxis categoryAxis=chart.createCategoryAxis(AxisPosition.BOTTOM);
                     categoryAxis.getOrAddMajorGridProperties().getLineProperties().addDashStop();
                     categoryAxis.setTitle("Title");
@@ -626,3 +537,4 @@ private void exportsqldoc (){
                     //XDDFLegendEntry legendEntry= chartLegend.addEntry();
                     //XDDFTextBody textBody=legendEntry.getTextBody();
                     //valueAxis.setTitle("Title");*/
+}
