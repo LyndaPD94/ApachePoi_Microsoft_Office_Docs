@@ -4,6 +4,7 @@ package com.example.apachepoi;
 import static com.example.apachepoi.Structure_BBDD.DATABASE_NAME;
 import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -55,7 +57,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        DB_Helper hiveDB_helper=new DB_Helper(MainActivity2.this);
+        new DB_Helper(MainActivity2.this);
         helper= new ListHelper(getApplicationContext(),DATABASE_NAME, null, 1);
         recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         data=new ArrayList<>();
@@ -95,7 +97,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
     private  void  getInfo(){
         SQLiteDatabase db=helper.getReadableDatabase();
-        Sales sales = null;
+        Sales sales;
         Cursor cur = db.rawQuery("select * from "+TABLE1 ,null);
         while (cur.moveToNext()) {
             sales= new Sales();
@@ -108,5 +110,6 @@ public class MainActivity2 extends AppCompatActivity {
             sales.setNotes(cur.getString(6));
             data.add(sales);
         }
+        cur.close();
     }
 }

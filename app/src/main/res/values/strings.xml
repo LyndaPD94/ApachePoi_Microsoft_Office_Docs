@@ -40,4 +40,10 @@
     <string name="input_sql_data">Input SQL Data</string>
     <string name="export_sql_hssf">Export SQL HSSF</string>
     <string name="export_sql_docx">Export SQL docx</string>
+    <string name="export_pptx">Export pptx</string>
+    <string name="hssf_workbook">hssf workbook</string>
+    <string name="hslfslideshow">HSLFSlideShow</string>
+    <string name="xwpf_workbook">xwpf workbook</string>
+    <string name="xssf_workbook">XSSF Workbook</string>
+    <string name="insert">Insert</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,25 +18,25 @@
         android:id="@+id/btn2hssf"
         android:layout_width="match_parent"
         android:layout_height="86dp"
-        android:text="hssf workbook" />
+        android:text="@string/hssf_workbook" />
 
     <Button
         android:id="@+id/btn2xwpfwbk"
         android:layout_width="match_parent"
         android:layout_height="74dp"
-        android:text="xwpf workbook" />
+        android:text="@string/xwpf_workbook" />
 
     <Button
         android:id="@+id/button2hslfss"
         android:layout_width="match_parent"
         android:layout_height="84dp"
-        android:text="HSLFSlideShow" />
+        android:text="@string/hslfslideshow" />
 
     <Button
         android:id="@+id/toxssfwbk"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="XSSF Workbook" />
+        android:text="@string/xssf_workbook" />
 
     <Button
         android:id="@+id/btninputd"

@@ -2,9 +2,7 @@ package com.example.apachepoi;
 
 
 import android.content.Context;
-import android.os.Environment;
 import android.widget.Toast;
-
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
 import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
@@ -28,13 +26,13 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ChartInfo {
     public ChartInfo() {}
     Context context;
@@ -43,7 +41,7 @@ public class ChartInfo {
     private static final int COLUMN_SPEAKERS = 2;
 
 
-    public void main(String[] args) throws Exception, IOException {
+    public void main(String[] args) {
         try{
             File file =new File("C://Users/Usuario/Documents/.Java_Apache/xwpf.docx");
             File file2= new File("C://Users/Usuario/AndroidStudioProjects/ApachePoi/app/sampledata/bar-chart-data.txt");

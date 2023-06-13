@@ -1,19 +1,13 @@
 package com.example.apachepoi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -21,9 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class XSSFWbk extends AppCompatActivity {
     EditText xddftv;
     Button btnexprtxls;
@@ -35,18 +28,15 @@ public class XSSFWbk extends AppCompatActivity {
         setContentView(R.layout.activity_xssfwbk);
         xddftv=(EditText) findViewById(R.id.xddftv);
         btnexprtxls=(Button) findViewById(R.id.exprtxls1);
-        btnexprtxls.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    exprtxls();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        btnexprtxls.setOnClickListener(v -> {
+            try {
+                exprtxls();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
-    private void exprtxls() throws IOException {
+    private void exprtxls() {
 
         try {
             File exportDir = new File(Environment.getExternalStorageDirectory()+"/Documents");
@@ -55,7 +45,6 @@ public class XSSFWbk extends AppCompatActivity {
             }
             try {
                 File file = new File(exportDir, "xssf_example.xlsx");
-                file.createNewFile();
                 try {
                     XSSFWorkbook workbook =new XSSFWorkbook();
                     XSSFSheet sheet=workbook.createSheet("Sheet 1");
@@ -71,7 +60,7 @@ public class XSSFWbk extends AppCompatActivity {
                     cell4.setCellValue(5);
                     XSSFCell cell5=row2.createCell(2);
                     cell5.setCellFormula("SUM(A2+B2)");
-                    XSSFSheet sheet1=workbook.createSheet("sheet 2");
+                    workbook.createSheet("sheet 2");
 
                     FileOutputStream fileOutputStream=new FileOutputStream(file);
                     workbook.write(fileOutputStream);
@@ -81,7 +70,7 @@ public class XSSFWbk extends AppCompatActivity {
                     e.getCause();
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 }
-            }catch(IOException e){
+            }catch(Exception e){
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             }

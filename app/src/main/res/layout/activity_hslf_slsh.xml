@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/exprtpptx"
     android:layout_width="match_parent"
@@ -16,6 +15,7 @@
         android:id="@+id/hslftv"
         android:layout_width="match_parent"
         android:autofillHints=""
+        android:labelFor="@id/hslftv"
         android:inputType="textPersonName"
         android:layout_height="122dp" />
 
@@ -23,5 +23,5 @@
         android:id="@+id/btnexprtpptx"
         android:layout_width="match_parent"
         android:layout_height="82dp"
-        android:text="Export pptx" />
+        android:text="@string/export_pptx" />
 </LinearLayout>

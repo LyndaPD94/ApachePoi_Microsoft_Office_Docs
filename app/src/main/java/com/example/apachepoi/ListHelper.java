@@ -122,8 +122,7 @@ public class ListHelper extends SQLiteOpenHelper {
     }
     public Cursor exportAll() {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cur=db.rawQuery("SELECT * FROM "+ TABLE1,null);
-        return cur;
+        return db.rawQuery("SELECT * FROM "+ TABLE1,null);
     }
 }
 
