@@ -26,8 +26,8 @@ public class XSSFWbk extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xssfwbk);
-        xddftv=(EditText) findViewById(R.id.xddftv);
-        btnexprtxls=(Button) findViewById(R.id.exprtxls1);
+        xddftv= findViewById(R.id.xddftv);
+        btnexprtxls= findViewById(R.id.exprtxls1);
         btnexprtxls.setOnClickListener(v -> {
             try {
                 exprtxls();

@@ -29,8 +29,8 @@ public class HslfSlsh extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hslf_slsh);
-        exprtpptx = (Button) findViewById(R.id.btnexprtpptx);
-        pptxtv = (EditText) findViewById(R.id.hslftv);
+        exprtpptx = findViewById(R.id.btnexprtpptx);
+        pptxtv = findViewById(R.id.hslftv);
 
         exprtpptx.setOnClickListener(v -> {
             try {

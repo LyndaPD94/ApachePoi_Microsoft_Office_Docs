@@ -1,50 +1,32 @@
 package com.example.apachepoi;
 
-import static com.example.apachepoi.Structure_BBDD.COLUMNAID;
-import static com.example.apachepoi.Structure_BBDD.COLUMNDID;
 import static com.example.apachepoi.Structure_BBDD.DATABASE_NAME;
 import static com.example.apachepoi.Structure_BBDD.TABLE1;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFChart;
-import org.apache.poi.hssf.usermodel.HSSFChildAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFShape;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Color;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.MonthDay;
 import java.util.ArrayList;
-import java.util.Calendar;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class HssfWbk extends AppCompatActivity {
     Button btnexprtxl, btnexprtsql;
     EditText xlsxtv;
@@ -56,40 +38,33 @@ public class HssfWbk extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hssf_wbk);
-        btnexprtxl = (Button) findViewById(R.id.btnexpxls);
-        xlsxtv = (EditText) findViewById(R.id.xlstv);
-        btnexprtsql = (Button) findViewById(R.id.exphssfsql);
-        btnexprtsql.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    exprtSQLTbl();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Error");
-                    Toast.makeText(getApplicationContext(), "Error: unable to export xlsx file", Toast.LENGTH_SHORT).show();
-                }
+        btnexprtxl = findViewById(R.id.btnexpxls);
+        xlsxtv = findViewById(R.id.xlstv);
+        btnexprtsql = findViewById(R.id.exphssfsql);
+        btnexprtsql.setOnClickListener(v -> {
+            try {
+                exprtSQLTbl();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error");
+                Toast.makeText(getApplicationContext(), "Error: unable to export xlsx file", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btnexprtxl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    exprtxls();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Error");
-                    Toast.makeText(getApplicationContext(), "Error: unable to export database", Toast.LENGTH_SHORT).show();
-                }
+        btnexprtxl.setOnClickListener(v -> {
+            try {
+                exprtxls();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error");
+                Toast.makeText(getApplicationContext(), "Error: unable to export database", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void exprtxls() throws IOException {
-        try {
+    private void exprtxls()  {
+
             File file = new File(Environment.getExternalStorageDirectory() + "/Documents/hssf_example.xls");
-            file.createNewFile();
             try {
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 HSSFSheet sheet = workbook.createSheet("Sheet 1");
@@ -130,7 +105,7 @@ public class HssfWbk extends AppCompatActivity {
                 HSSFCell cell9 = row6.createCell(1);
                 cell9.setCellFormula("SUM(B2:B5)");
 
-                HSSFSheet sheet1 = workbook.createSheet("sheet 2");
+                //HSSFSheet sheet1 = workbook.createSheet("sheet 2");
 
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 workbook.write(fileOutputStream);
@@ -140,10 +115,8 @@ public class HssfWbk extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception e) {
-
         }
-    }
+
 
     private void exprtSQLTbl() {
         try {
@@ -155,24 +128,25 @@ public class HssfWbk extends AppCompatActivity {
                 exportDir.mkdirs();
             }
             File file = new File(exportDir, "example_hssf_sql.xls");
-            file.createNewFile();
             try {
-                if (file.exists()) {
+                if (!file.exists()) {
                     System.out.println("file.xls " + exportDir.getAbsolutePath());
                     Toast.makeText(getApplicationContext(), "Writing data to excel file...", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "ATTENTION:The file already exists!", Toast.LENGTH_LONG).show();
                 }
                 HSSFWorkbook wb = new HSSFWorkbook();
-                SQLiteDatabase db = helper.getWriteableDatabase();
-                Cursor cur = helper.exportAll();
+                helper.getWriteableDatabase();
+                SQLiteDatabase db;
+                helper.exportAll();
+                Cursor cur;
                 Sheet sheet = wb.createSheet("Sqlite data");
                 data = new ArrayList<>();
                 db = helper.getReadableDatabase();
                 Row row = sheet.createRow(0);
                 cur = db.rawQuery("select * from " + TABLE1, null);
                 while (cur.moveToNext()) {
-                    String arrStr[] = {
+                    String[] arrStr = {
                             String.valueOf(cur.getString(0)),
                             String.valueOf(cur.getString(1)),
                             String.valueOf(cur.getString(2)),
@@ -230,7 +204,7 @@ public class HssfWbk extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }

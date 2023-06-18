@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn2hssf=(Button)findViewById(R.id.btn2hssf);
-        btn2xwpf=(Button)findViewById(R.id.btn2xwpfwbk);
-        btn2hslf=(Button) findViewById(R.id.button2hslfss);
-        btn2xssfwbk=(Button) findViewById(R.id.toxssfwbk);
-        btninput=(Button) findViewById(R.id.btninputd);
+        btn2hssf= findViewById(R.id.btn2hssf);
+        btn2xwpf= findViewById(R.id.btn2xwpfwbk);
+        btn2hslf= findViewById(R.id.button2hslfss);
+        btn2xssfwbk= findViewById(R.id.toxssfwbk);
+        btninput= findViewById(R.id.btninputd);
 
                 btninput.setOnClickListener(v -> {
                    Intent intent= new Intent(MainActivity.this, MainActivity3.class);

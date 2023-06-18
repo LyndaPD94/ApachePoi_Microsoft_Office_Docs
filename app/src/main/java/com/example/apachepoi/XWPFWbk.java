@@ -67,9 +67,9 @@ public class XWPFWbk extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_xwpfwbk);
-        btnexpdocx = (Button) findViewById(R.id.exprtdocx);
-        exprtsqldoc = (Button) findViewById(R.id.expsqldoc);
-        docxtv = (EditText) findViewById(R.id.doocxtv);
+        btnexpdocx = findViewById(R.id.exprtdocx);
+        exprtsqldoc = findViewById(R.id.expsqldoc);
+        docxtv = findViewById(R.id.doocxtv);
         exprtsqldoc.setOnClickListener(v -> {
             try {
                 exportsqldoc();
@@ -294,11 +294,11 @@ public class XWPFWbk extends AppCompatActivity {
                     lvalues1[0] = 5.0; // if you ever want to change the underlying data, it has to be done before building the data source
                     final XDDFNumericalDataSource<? extends Number> lvaluesData2 = XDDFDataSourcesFactory.fromArray(lvalues2, lineDataRange2, COLUMN_SPEAKERS);
                     lvaluesData2.setFormatCode("General");
-                    XDDFChartData line = (XDDFChartData) chart2.createData(ChartTypes.LINE, xaxisline, yvalueAxisline);
+                    XDDFChartData line = chart2.createData(ChartTypes.LINE, xaxisline, yvalueAxisline);
                     line.setVaryColors(true);
-                    XDDFChartData.Series lseries1 = (XDDFChartData.Series) line.addSeries(categoriesLData, lvaluesData);
+                    XDDFChartData.Series lseries1 = line.addSeries(categoriesLData, lvaluesData);
                     lseries1.setTitle(seriesline[0], chart2.setSheetTitle(seriesline[0], COLUMN_COUNTRIES));
-                    XDDFChartData.Series lseries2 = (XDDFChartData.Series) line.addSeries(categoriesLData, lvaluesData2);
+                    XDDFChartData.Series lseries2 = line.addSeries(categoriesLData, lvaluesData2);
                     lseries2.setTitle(seriesline[1], chart2.setSheetTitle(seriesline[1], COLUMN_SPEAKERS));
                     line.setVaryColors(true);
                     line.setVaryColors(true);

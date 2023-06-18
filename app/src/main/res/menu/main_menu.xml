@@ -33,7 +33,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/ofert"
-        android:title="Organic Fertilizers"
+        android:title="@string/organic_fertilizers"
         app:showAsAction="never" />
 
 </menu>

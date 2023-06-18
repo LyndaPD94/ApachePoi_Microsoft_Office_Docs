@@ -70,16 +70,16 @@ public class MainActivity3 extends AppCompatActivity {
         helper=new ListHelper(getApplicationContext(),DATABASE_NAME,null,1);
 
 
-        transid=(EditText) findViewById(R.id.transid);
-        date2=(EditText) findViewById(R.id.date2);
-        descrip2=(EditText) findViewById(R.id.descrip2);
-        amt2=(EditText) findViewById(R.id.amt2);
-        price2=(EditText) findViewById(R.id.price2);
-        total2=(EditText) findViewById(R.id.total2);
-        coment2=(EditText) findViewById(R.id.comment2);
+        transid= findViewById(R.id.transid);
+        date2= findViewById(R.id.date2);
+        descrip2= findViewById(R.id.descrip2);
+        amt2= findViewById(R.id.amt2);
+        price2= findViewById(R.id.price2);
+        total2= findViewById(R.id.total2);
+        coment2= findViewById(R.id.comment2);
 
-        btsearch=(Button) findViewById(R.id.btsearch);
-        btinsert=(Button) findViewById(R.id.btinsert);
+        btsearch= findViewById(R.id.btsearch);
+        btinsert= findViewById(R.id.btinsert);
 
         btinsert.setOnClickListener(v -> {
             try {

@@ -59,7 +59,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         new DB_Helper(MainActivity2.this);
         helper= new ListHelper(getApplicationContext(),DATABASE_NAME, null, 1);
-        recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
+        recyclerView= findViewById(R.id.recycler_view);
         data=new ArrayList<>();
 
         getAdapter();
