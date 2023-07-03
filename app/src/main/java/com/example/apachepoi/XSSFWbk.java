@@ -5,21 +5,34 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
+import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
+import org.apache.poi.xddf.usermodel.chart.AxisPosition;
+import org.apache.poi.xddf.usermodel.chart.AxisTickMark;
+import org.apache.poi.xddf.usermodel.chart.ChartTypes;
+import org.apache.poi.xddf.usermodel.chart.XDDFBarChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
+import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFChart;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class XSSFWbk extends AppCompatActivity {
     EditText xddftv;
     Button btnexprtxls;
+  String seriesText = "Data,";
+    String[] series = seriesText.split(",");
+    List<String> list1 = new ArrayList<>(5);
+    List<Double> list2 = new ArrayList<>(5);
 
 
     @Override
@@ -28,6 +41,18 @@ public class XSSFWbk extends AppCompatActivity {
         setContentView(R.layout.activity_xssfwbk);
         xddftv= findViewById(R.id.xddftv);
         btnexprtxls= findViewById(R.id.exprtxls1);
+
+        list1.add("Data 1");
+        list1.add("Data 2");
+        list1.add("Data 3");
+        list1.add("Data 4");
+        list1.add("Data 5");
+        list2.add(50d);
+        list2.add(10d);
+        list2.add(110d);
+        list2.add(20d);
+        list2.add(5d);
+
         btnexprtxls.setOnClickListener(v -> {
             try {
                 exprtxls();
@@ -60,7 +85,22 @@ public class XSSFWbk extends AppCompatActivity {
                     cell4.setCellValue(5);
                     XSSFCell cell5=row2.createCell(2);
                     cell5.setCellFormula("SUM(A2+B2)");
-                    workbook.createSheet("sheet 2");
+
+
+                    XSSFSheet sheet2= workbook.createSheet("Chart");
+                    XSSFChart chart=sheet2.createDrawingPatriarch().createChart(new XSSFClientAnchor());
+                    //XDDFChart chart=sheet2.createDrawingPatriarch().createChart(new XSSFClientAnchor());
+                    chart.createValueAxis(AxisPosition.BOTTOM);
+                    chart.createValueAxis(AxisPosition.LEFT);
+                    XDDFChartAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+                    bottomAxis.setTitle(series[0]);
+                    XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+                    //leftAxis.setTitle(series[0] + "," + series[1]);
+                    leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+                    leftAxis.setMajorTickMark(AxisTickMark.OUT);
+                    leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
+                    XDDFBarChartData barChartData= (XDDFBarChartData) chart.createData(ChartTypes.BAR,bottomAxis,leftAxis);
+                    chart.plot(barChartData);
 
                     FileOutputStream fileOutputStream=new FileOutputStream(file);
                     workbook.write(fileOutputStream);
