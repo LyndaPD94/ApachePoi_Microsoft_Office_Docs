@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFChart;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -196,6 +198,7 @@ public class HssfWbk extends AppCompatActivity {
                 Cell cella = rowa.getCell(0);
                 cella.getCellStyle().setAlignment(HorizontalAlignment.CENTER);
 //--------------------------------------------------------------------------------------------------
+
                 FileOutputStream fileOut = new FileOutputStream(file);
                 wb.write(fileOut);
                 fileOut.close();
