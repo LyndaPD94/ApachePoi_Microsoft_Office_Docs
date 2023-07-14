@@ -5,8 +5,11 @@ import static com.example.apachepoi.Structure_BBDD.TABLE1;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.pdf.PdfDocument;
+import android.graphics.pdf.PdfRenderer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -96,6 +99,9 @@ public class XWPFWbk extends AppCompatActivity {
             try {
                 File file = new File(exportDir, "xwpf_example.docx");
                 try {
+                    PdfDocument pdfDocument=new PdfDocument();
+                    PdfRenderer pdfRenderer=new PdfRenderer(ParcelFileDescriptor.adoptFd(1));
+                    pdfRenderer.openPage(1);
 
                     XWPFDocument xwpfDocument = new XWPFDocument();
                     XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
