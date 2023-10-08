@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
 import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
@@ -99,10 +100,7 @@ public class XWPFWbk extends AppCompatActivity {
             try {
                 File file = new File(exportDir, "xwpf_example.docx");
                 try {
-                    PdfDocument pdfDocument=new PdfDocument();
-                    PdfRenderer pdfRenderer=new PdfRenderer(ParcelFileDescriptor.adoptFd(1));
-                    pdfRenderer.openPage(1);
-
+                    
                     XWPFDocument xwpfDocument = new XWPFDocument();
                     XWPFParagraph xwpfParagraph = xwpfDocument.createParagraph();
                     XWPFRun xwpfRun = xwpfParagraph.createRun();
@@ -425,7 +423,43 @@ public class XWPFWbk extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }/* private void exportdocsqltbl2 () {
+    }/*
+     private void readandchangechart() throws IOException, InvalidFormatException {
+        File file=new File(Environment.getExternalStorageDirectory()+"/Documents/input.docx");
+        if(!file.exists()){
+            file.createNewFile();
+            Toast.makeText(getApplicationContext(), getString(R.string.writinword), Toast.LENGTH_SHORT).show();
+        }
+        FileInputStream inpuFile=new FileInputStream(file);
+        FileOutputStream outFile = new FileOutputStream(Environment.getExternalStorageDirectory()+"/Documents/output.docx");
+        XWPFDocument document = new XWPFDocument();
+        XWPFChart chart=document.createChart();
+        chart.setTitleText("Chart Title");
+        for (POIXMLDocumentPart part : document.getRelations()) {
+            if (part instanceof XWPFChart) {
+                chart = (XWPFChart) part;
+                break;
+            }
+        }
+        //change chart title from "Chart Title" to XWPF CHART
+        CTChart ctChart = chart.getCTChart();
+        CTTitle title = ctChart.getTitle();
+        CTTx tx = title.addNewTx();
+        CTTextBody rich = tx.addNewRich();
+        rich.addNewBodyPr();
+        rich.addNewLstStyle();
+        CTTextParagraph p = rich.addNewP();
+        CTRegularTextRun r = p.addNewR();
+        r.addNewRPr();
+        r.setT("XWPF CHART");
+
+        //write modified chart in output docx file
+        document.write(outFile);
+        Toast.makeText(this, getString(R.string.successfully), Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void exportdocsqltbl2 () {
         try {
             try {
                 File dbFile = getDatabasePath(DATABASE_NAME);
