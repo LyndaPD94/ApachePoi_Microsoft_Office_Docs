@@ -47,4 +47,11 @@
     <string name="xssf_workbook">XSSF Workbook</string>
     <string name="insert">Insert</string>
     <string name="organic_fertilizers">Organic Fertilizers</string>
+     <string name="aboutapache">About Apache</string>
+    <string name="aboutxwpf">About XWPF</string>
+     <string name="aboutxssf">About XSSF</string>
+     <string name="abouthssf">About HSSF</string>
+    <string name="abouthslf">About HSLF</string>
+
+
 </resources>
