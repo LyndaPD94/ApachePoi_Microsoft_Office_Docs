@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-
+    //implementation 'org.webjars.npm:core-js:3.31.1'
     //implementation fileTree(dir: 'C://Users/Usuario/AndroidStudioProjects/poi-3.9', include: ['*.aar', '*.jar'], exclude: [])
     //implementation files('C://Users/Usuario/AndroidStudioProjects/Jspeadsheet/JSpreadsheet.jar',include: ['*.aar', '*.jar'], exclude: [])
 
@@ -43,7 +43,7 @@ dependencies {
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
     implementation 'org.apache.poi:poi-scratchpad:5.2.3'
 
-    //implementation 'org.webjars.npm:core-js:3.31.1'
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

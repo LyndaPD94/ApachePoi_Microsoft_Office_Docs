@@ -576,5 +576,119 @@ public class XWPFWbk extends AppCompatActivity {
                     //XDDFChartLegend chartLegend=chart.getOrAddLegend();
                     //XDDFLegendEntry legendEntry= chartLegend.addEntry();
                     //XDDFTextBody textBody=legendEntry.getTextBody();
-                    //valueAxis.setTitle("Title");*/
+                    //valueAxis.setTitle("Title");
+private void CreatChartOpt2() throws Resources.NotFoundException, IOException {
+        File file=new File(Environment.getExternalStorageDirectory()+"/Documents");
+        if(!file.exists()) {
+            file.mkdirs();
+            Toast.makeText(getApplicationContext(), getString(R.string.writinword), Toast.LENGTH_SHORT).show();
+        }
+            File file2 = new File(file, "report.docx");
+            String chartTitle = "Chart";
+            String seriesText = " ";
+            String[] series = seriesText == null ? new String[0] : seriesText.split(",");
+
+            // Category Axis Data
+            List<String> listLanguages = new ArrayList<>(10);
+
+            // Values
+            List<Double> listCountries = new ArrayList<>(10);
+            List<Double> listSpeakers = new ArrayList<>(10);
+
+            // set model
+
+
+                listCountries.add(22.0);
+                listSpeakers.add(55.0);
+                listLanguages.add("Spanish");
+                listCountries.add(228.0);
+                listSpeakers.add(5.0);
+                listLanguages.add("E");
+                listCountries.add(72.0);
+                listSpeakers.add(550.0);
+                listLanguages.add("Fr");
+                listCountries.add(92.0);
+                listSpeakers.add(595.0);
+                listLanguages.add("Ru");
+                listCountries.add(32.0);
+                listSpeakers.add(52.0);
+                listLanguages.add("J");
+                listCountries.add(89.0);
+                listSpeakers.add(78.0);
+                listLanguages.add("Ch");
+                listCountries.add(24.0);
+                listSpeakers.add(55.0);
+                listLanguages.add("Zh");
+                listCountries.add(22.0);
+                listSpeakers.add(55.0);
+                listLanguages.add("I");
+
+
+            String[] categories = listLanguages.toArray(new String[0]);
+            Double[] values1 = listCountries.toArray(new Double[0]);
+            Double[] values2 = listSpeakers.toArray(new Double[0]);
+
+            try (XWPFDocument doc = new XWPFDocument();
+                 OutputStream out = new FileOutputStream(file2)) {
+                XWPFChart chart = doc.createChart(XDDFChart.DEFAULT_WIDTH * 10, XDDFChart.DEFAULT_HEIGHT * 15);
+                setBarData(chart, chartTitle, series, categories, values1, values2);
+                // save the result
+                doc.write(out);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            }
+
+        System.out.println("Done");
+    }
+
+    private static void setBarData(XWPFChart chart, String chartTitle, String[] series, String[] categories, Double[] values1, Double[] values2) {
+        // Use a category axis for the bottom axis.
+        XDDFChartAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+        bottomAxis.setTitle(chartTitle);
+        XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+        leftAxis.setTitle(",");
+        leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+        leftAxis.setMajorTickMark(AxisTickMark.OUT);
+        leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
+
+        final int numOfPoints = categories.length;
+        final String categoryDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_LANGUAGES, COLUMN_LANGUAGES));
+        final String valuesDataRange = chart.formatRange(new CellRangeAddress(1, numOfPoints, COLUMN_COUNTRIES, COLUMN_COUNTRIES));
+        final XDDFDataSource<?> categoriesData = XDDFDataSourcesFactory.fromArray(categories, categoryDataRange, COLUMN_LANGUAGES);
+        final XDDFNumericalDataSource<? extends Number> valuesData = XDDFDataSourcesFactory.fromArray(values1, valuesDataRange, COLUMN_COUNTRIES);
+        valuesData.setFormatCode("General");
+        values1[6] = 16.0; // if you ever want to change the underlying data, it has to be done before building the data source
+
+
+        XDDFBarChartData bar = (XDDFBarChartData) chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
+
+        XDDFBarChartData.Series series1 = (XDDFBarChartData.Series) bar.addSeries(categoriesData, valuesData);
+        series1.setTitle(chartTitle);
+
+
+        bar.setVaryColors(true);
+        bar.setBarDirection(BarDirection.COL);
+        chart.plot(bar);
+
+        XDDFChartLegend legend = chart.getOrAddLegend();
+        legend.setPosition(LegendPosition.LEFT);
+        legend.setOverlay(false);
+
+        chart.setTitleText(chartTitle);
+        chart.setTitleOverlay(false);
+        chart.setAutoTitleDeleted(false);
+    }
+
+
+
+
+
+
+
+
+                    */
 }
